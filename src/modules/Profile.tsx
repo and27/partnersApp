@@ -1,46 +1,88 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Dimensions } from 'react-native';
-import { Link } from 'react-router-native';
+import ProfileUser from './ProfileUser';
+import { ScrollView } from 'react-native-gesture-handler';
+
+const UserSection = ({ title, items }) => (
+  <View style={styles.section}>
+    <Text>{title}</Text>
+    <View style={styles.projects}>
+      {items.map(item => (
+        <View style={styles.card}>
+          <Text>{item}</Text>
+        </View>
+      ))}
+    </View>
+  </View>
+);
 
 export default function Profile() {
-  const user = { name: 'John', email: 'john@email.com' };
+  const user = {
+    id: '0',
+    name: 'Ayesha Bazmi',
+    expertise: 'Marketing Manager',
+    city: 'Quito'
+  };
   return (
     <>
-      <View style={styles.container2}>
-        <View style={styles.menu}>
-          <Link to="/users">
-            <Text>Buscar partners</Text>
-          </Link>
-          <Link to="/">
-            <Text>Salir</Text>
-          </Link>
+      <ScrollView contentContainerStyle={styles.container2}>
+        <ProfileUser item={user} />
+        <View style={styles.containerInner}>
+          <View style={styles.goal}>
+            <Text style={styles.title}>Sobre mi: </Text>
+            <Text style={styles.description}>
+              Ayesha Bazmi is a results-driven Marketing Manager with a passion
+              for leveraging innovative strategies to drive brand growth and
+              customer engagement in the ever-evolving digital landscape.
+            </Text>
+          </View>
+          <UserSection title="Favorite industries" items={['Pharma', 'Tech']} />
+          <UserSection title="Favorite ODS" items={['1', '2']} />
         </View>
-        <Text style={styles.title}>Mi Perfil</Text>
-        <View>
-          <Text>{user.name}</Text>
-          <Text>{user.email}</Text>
-        </View>
-      </View>
+      </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container2: {
-    marginHorizontal: 20,
-    marginVertical: 60,
-    flex: 1,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'flex-start',
+    marginTop: 20
+  },
+  containerInner: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    paddingHorizontal: 36
   },
   title: {
     fontSize: 18,
-    marginBottom: 8
+    marginBottom: 8,
+    color: '#2E4D8E',
+    fontWeight: '500'
+  },
+  description: {
+    fontSize: 13,
+    fontWeight: '300'
   },
   menu: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'stretch'
+  },
+
+  section: {
+    marginTop: 24
+  },
+  projects: { display: 'flex', flexDirection: 'row', gap: 8, marginTop: 4 },
+  card: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    backgroundColor: '#fff'
+  },
+  goal: {
+    marginTop: 20
   }
 });

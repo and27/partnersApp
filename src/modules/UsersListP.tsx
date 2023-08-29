@@ -3,10 +3,17 @@ import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import User from './User';
 import users from '../users';
 
-export default function UsersList() {
+export default function UsersListP() {
   return (
     <>
       <SafeAreaView>
+        <View style={styles.filters}>
+          <View style={styles.filterAll}>
+            <Text>All</Text>
+          </View>
+          <Text>Same city</Text>
+          <Text>Same industry</Text>
+        </View>
         <FlatList
           style={styles.usersList}
           data={users}
@@ -31,5 +38,18 @@ const styles = StyleSheet.create({
 
   usersList: {
     paddingHorizontal: 16
+  },
+  filters: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    gap: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 16
+  },
+  filterAll: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    paddingHorizontal: 5
   }
 });
