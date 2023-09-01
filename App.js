@@ -1,12 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import Navigation from './src/modules/Tabs';
+import { createContext, useState } from 'react';
+
+const Context = createContext();
 
 export default function App() {
-  const isSignedIn = true;
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   return (
     <>
-      <StatusBar style="dark" />
-      <Navigation isSignedIn />
+      <Context.Provider value={{ setIsSignedIn: setIsSignedIn }}>
+        <StatusBar style="dark" />
+        <Navigation isSignedIn={isSignedIn} />
+      </Context.Provider>
     </>
   );
 }
+export { Context };

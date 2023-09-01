@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -11,38 +11,30 @@ import {
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../colors';
-import { Context } from '../../App';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
 
-export default function Login() {
-  const { setIsSignedIn } = useContext(Context);
+export default function Signup({ setIsSignedIn }) {
   const navigation = useNavigation();
-  const handleLogin = () => {
-    navigation.navigate('Perfil' as never);
+  const handleSignup = () => {
+    navigation.navigate('Networking' as never);
     setIsSignedIn(true);
   };
   return (
     <>
       <View style={styles.container2}>
         <Image source={img} style={styles.logo} />
-        <TextInput style={styles.input} placeholder="Usuario" />
+        <TextInput style={styles.input} placeholder="Correo" />
+        <TextInput style={styles.input} placeholder="Nombre" />
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
           secureTextEntry
         />
-        <Pressable style={styles.btn} onPress={handleLogin}>
-          <Text style={styles.btnText}>Ingresar</Text>
+        <Pressable style={styles.btn} onPress={handleSignup}>
+          <Text style={styles.btnText}>Registrarme</Text>
         </Pressable>
-        <Button title="Olvidé mi contraseña" color="black" />
-        <Button
-          title="Registrarme"
-          onPress={() => {
-            navigation.navigate('Registro' as never);
-          }}
-        />
       </View>
     </>
   );
@@ -50,7 +42,7 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container2: {
-    margin: 20,
+    marginHorizontal: 20,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
@@ -71,8 +63,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhite
   },
   logo: {
-    width: '80%',
-    height: 120,
+    width: '70%',
+    height: 110,
     marginBottom: 30
   },
   btn: {

@@ -1,14 +1,15 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
 import ProfileUser from './ProfileUser';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Context } from '../../App';
 
 const UserSection = ({ title, items }) => (
   <View style={styles.section}>
     <Text>{title}</Text>
     <View style={styles.projects}>
-      {items.map(item => (
-        <View style={styles.card}>
+      {items.map((item, index) => (
+        <View style={styles.card} key={index}>
           <Text>{item}</Text>
         </View>
       ))}
@@ -23,6 +24,8 @@ export default function Profile() {
     expertise: 'Marketing Manager',
     city: 'Quito'
   };
+
+  const { setIsSignedIn } = useContext(Context);
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
@@ -38,6 +41,7 @@ export default function Profile() {
           </View>
           <UserSection title="Favorite industries" items={['Pharma', 'Tech']} />
           <UserSection title="Favorite ODS" items={['1', '2']} />
+          <Button onPress={() => setIsSignedIn(false)} title="Cerrar sesión" />
         </View>
       </ScrollView>
     </>
