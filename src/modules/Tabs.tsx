@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import Profile from './Profile';
 import UsersListP from './UsersListP';
-import MyStack from './Stack';
-import Login from './Login';
+import MyStack, { LoginStack } from './Stack';
+import Board from './Board';
+import Chat from './Chat';
+import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,16 +13,26 @@ function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Partners"
+        name="Inicio"
         component={MyStack}
         options={{
-          tabBarLabel: 'Home',
           headerShown: false,
           tabBarIcon: () => <Ionicons name="home-outline" size={24} />
         }}
       />
       <Tab.Screen
-        name="My Profile"
+        name="Chat"
+        component={Chat}
+        options={{
+          tabBarLabel: 'Mensajes',
+          tabBarIcon: () => (
+            <Ionicons name="md-chatbox-ellipses-outline" size={24} />
+          )
+        }}
+      />
+
+      <Tab.Screen
+        name="Perfil"
         component={Profile}
         options={{
           tabBarIcon: () => <Ionicons name="person-outline" size={24} />
@@ -41,7 +52,7 @@ function MyTabs() {
 export default function Navigation({ isSignedIn }) {
   return (
     <NavigationContainer>
-      {isSignedIn ? <MyTabs /> : <Login />}
+      {isSignedIn ? <MyTabs /> : <LoginStack />}
     </NavigationContainer>
   );
 }
