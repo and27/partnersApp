@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LearningCard from '../components/LearningCard';
 import { COLORS } from '../colors';
+
+const photoUser3 = require('../../assets/persona2.png');
+const photoUser2 = require('../../assets/persona3.png');
+const photoUser1 = require('../../assets/persona.png');
 
 export default function Board() {
   const learningPaths = [
@@ -11,24 +15,22 @@ export default function Board() {
       category: 'Iniciando',
       steps: [
         {
-          title: 'Nicho',
+          title: 'Marie Clark',
+          position: 'Abogada',
           description:
             'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
         },
         {
-          title: 'Prototipo',
+          title: 'Ana Rodriguez',
+          position: 'Diseñadora Gráfica',
           description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
+            'En mi carrera creativa, Partners ha sido un lugar donde puedo expresar mi visión artística y contribuir ...'
         },
         {
-          title: 'Mom test',
+          title: 'Carlos López',
+          position: 'Gerente de Ventas',
           description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
-        },
-        {
-          title: 'Análisis',
-          description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
+            'Trabajar con Partners me ha permitido liderar un equipo de ventas excepcionales y alcanzar metas comerciales ...'
         }
       ]
     },
@@ -37,50 +39,22 @@ export default function Board() {
       category: 'Desarrollo',
       steps: [
         {
-          title: 'Investigación',
+          title: 'Ayesha Bazmi',
+          position: 'Abogada',
           description:
             'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
         },
         {
-          title: 'Diseño',
+          title: 'David Smith',
+          position: 'Ingeniero de Software',
+          description:
+            'Partners me ha brindado la oportunidad de trabajar en proyectos innovadores y colaborar ...'
+        },
+        {
+          title: 'Ayesha Bazmi',
+          position: 'Abogada',
           description:
             'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
-        },
-        {
-          title: 'Desarrollo',
-          description:
-            'Lleva a cabo el desarrollo del producto, asegurándote de cumplir con los estándares de calidad.'
-        },
-        {
-          title: 'Pruebas',
-          description:
-            'Realiza pruebas exhaustivas para identificar y corregir posibles errores o fallos del producto.'
-        }
-      ]
-    },
-    {
-      title: '¿Cómo lanzar mi producto al mercado?',
-      category: 'Lanzamiento',
-      steps: [
-        {
-          title: 'Estrategia de lanzamiento',
-          description:
-            'Elabora una estrategia de lanzamiento que incluya la segmentación del mercado, canales de distribución y promoción.'
-        },
-        {
-          title: 'Presupuesto',
-          description:
-            'Establece un presupuesto para el lanzamiento que cubra los gastos de marketing, producción y distribución.'
-        },
-        {
-          title: 'Promoción',
-          description:
-            'Promociona tu producto a través de diferentes medios y plataformas para alcanzar a tu audiencia objetivo.'
-        },
-        {
-          title: 'Feedback',
-          description:
-            'Recopila feedback de los clientes durante el lanzamiento para realizar ajustes y mejoras si es necesario.'
         }
       ]
     }
@@ -89,26 +63,33 @@ export default function Board() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
+        <Text>Equipos</Text>
+        <TextInput style={styles.input} placeholder="🔍 Buscar" />
         {learningPaths.map(path => {
           return (
             <View style={styles.module}>
-              <View style={styles.headingContainer}>
-                <View style={styles.heading}>
-                  <Text style={styles.headingText}>{path.title}</Text>
-                </View>
+              <View>
+                <Text>{path.title}</Text>
               </View>
               <ScrollView
                 contentContainerStyle={styles.steps}
                 horizontal={true}
               >
                 {path?.steps?.map((step, index) => {
-                  const isEven = index % 2 === 0;
+                  const isMultipleOf3 = index % 3 === 0;
+                  const isMultipleOf2 = index % 2 == 0;
                   return (
                     <LearningCard
                       title={step?.title}
                       description={step?.description}
-                      step={index + 1}
-                      isEven={isEven}
+                      position={step?.position}
+                      img={
+                        isMultipleOf2
+                          ? isMultipleOf3
+                            ? photoUser3
+                            : photoUser2
+                          : photoUser1
+                      }
                       key={index}
                     />
                   );
@@ -124,11 +105,11 @@ export default function Board() {
 
 const styles = StyleSheet.create({
   container2: {
-    paddingLeft: 16
+    paddingLeft: 16,
+    paddingTop: 16
   },
   module: {
-    paddingTop: 24,
-    paddingLeft: 16,
+    paddingTop: 16,
     paddingBottom: 16,
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -138,31 +119,25 @@ const styles = StyleSheet.create({
   steps: {
     paddingBottom: 8,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     gap: 16
   },
-  headingContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderBottomColor: COLORS.primaryBlack
-  },
-  level: {
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
-    alignSelf: 'baseline',
-    fontSize: 12
-  },
+
   headingText: {
     fontWeight: '600',
+    color: COLORS.primaryBlue,
     fontSize: 20,
     paddingTop: 8,
     letterSpacing: '-0.8%'
+  },
+
+  input: {
+    height: 40,
+    alignSelf: 'stretch',
+    borderColor: '#bbb',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 8,
+    marginTop: 8,
+    backgroundColor: COLORS.primaryWhite
   }
 });

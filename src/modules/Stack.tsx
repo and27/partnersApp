@@ -5,12 +5,14 @@ import PublicProfile from './PublicProfile';
 import Board from './Board';
 import Login from './Login';
 import Signup from './Signup';
+import Home from './Home';
 
 const Stack = createNativeStackNavigator();
 
 function MyStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Inicio" component={Home} />
       <Stack.Screen name="Noticias" component={Board} />
       <Stack.Screen name="Perfil" component={Profile} />
       <Stack.Screen name="PublicProfile" component={PublicProfile} />
