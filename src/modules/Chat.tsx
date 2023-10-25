@@ -17,7 +17,6 @@ export default function Chat() {
       <SafeAreaView style={styles.container}>
         <TextInput style={styles.input} placeholder="🔍 Buscar" />
         <FlatList
-          style={styles.usersList}
           data={users}
           renderItem={({ item }) => <ChatItem item={item} />}
           keyExtractor={item => item.id}

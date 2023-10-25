@@ -1,5 +1,6 @@
 import { Image, Text, View, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { COLORS } from '../colors';
 
 export default function ChatItem({ item }) {
   const navigation = useNavigation();
@@ -10,8 +11,10 @@ export default function ChatItem({ item }) {
         <Text style={styles.listItemTitle}>{item.name}</Text>
         <Text style={styles.listItemSubtitle}>11:00</Text>
       </View>
-      <View style={styles.social}>
-        <Text>Hola Estoy interesada en trabajar contigo.</Text>
+      <View style={styles.chat}>
+        <Text style={styles.chatText}>
+          Hola Estoy interesada en trabajar contigo.
+        </Text>
       </View>
     </View>
   );
@@ -40,9 +43,13 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 100
   },
-  social: {
+  chat: {
     alignSelf: 'center',
     marginLeft: 32,
     maxWidth: 150
+  },
+  chatText: {
+    color: COLORS.primaryBlue,
+    fontSize: 12
   }
 });

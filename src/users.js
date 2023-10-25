@@ -1,4 +1,4 @@
-const imagePerson1 = require('../assets/persona.png');
+const imagePerson3 = require('../assets/persona3.png');
 const imagePerson2 = require('../assets/persona2.png');
 
 const users = [
@@ -7,21 +7,21 @@ const users = [
     name: 'John',
     expertise: 'Web designer',
     city: 'Ibarra',
-    img: imagePerson1
+    img: imagePerson3
   },
   {
     id: '2',
-    name: 'Doe',
+    name: 'Mari',
     expertise: 'Data science',
     city: 'Quito',
     img: imagePerson2
   },
   {
     id: '3',
-    name: 'Mario',
+    name: 'Renán',
     expertise: 'Biology',
     city: 'Quito',
-    img: imagePerson1
+    img: imagePerson3
   },
   {
     id: '4',
@@ -35,7 +35,7 @@ const users = [
     name: 'Doe',
     expertise: 'Business',
     city: 'Guayaquil',
-    img: imagePerson1
+    img: imagePerson3
   },
   {
     id: '6',
@@ -49,7 +49,7 @@ const users = [
     name: 'Jose',
     expertise: 'Analytics',
     city: 'Cuenca',
-    img: imagePerson1
+    img: imagePerson3
   },
   {
     id: '8',
@@ -63,7 +63,7 @@ const users = [
     name: 'Jose',
     expertise: 'Analytics',
     city: 'Quito',
-    img: imagePerson1
+    img: imagePerson3
   }
 ];
 
