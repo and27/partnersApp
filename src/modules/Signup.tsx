@@ -1,38 +1,166 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
-  Button,
   Text,
   Image,
-  Pressable
+  Pressable,
+  Alert
 } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../colors';
+import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
+import { signupWithPassword } from '../utils/supabase';
+import { Context } from '../../App';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
+type FormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
 
-export default function Signup({ setIsSignedIn }) {
+export default function Signup() {
   const navigation = useNavigation();
-  const handleSignup = () => {
-    navigation.navigate('Networking' as never);
-    setIsSignedIn(true);
+  const { setIsSignedIn } = useContext(Context);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm();
+
+  const onSubmit = (userCredentials: FormValues) => {
+    handleSignup(userCredentials);
   };
+
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.error(errors);
+  };
+
+  const handleSignup = async (userCredentials: FormValues) => {
+    const { data, error } = await signupWithPassword({
+      email: userCredentials?.email,
+      password: userCredentials?.password
+    });
+
+    if (error) {
+      Alert.alert('Error', error.message, [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        { text: 'OK' }
+      ]);
+      return setIsSignedIn(false);
+    }
+
+    setIsSignedIn(true);
+    navigation.navigate('MainStack' as never);
+  };
+
   return (
     <>
       <View style={styles.container2}>
         <Image source={img} style={styles.logo} />
-        <TextInput style={styles.input} placeholder="Correo" />
-        <TextInput style={styles.input} placeholder="Nombre" />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          secureTextEntry
+        <Controller
+          control={control}
+          name="email"
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error }
+          }) => (
+            <View>
+              <TextInput
+                style={{
+                  ...styles.input,
+                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                }}
+                onBlur={onBlur}
+                placeholder="Correo"
+                value={value}
+                onChangeText={onChange}
+              />
+              {errors.email && (
+                <Text style={styles.errorText}>{error.message}</Text>
+              )}
+            </View>
+          )}
+          rules={{
+            required: 'Ingresa tu correo',
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: 'Ingresa un correo válido'
+            }
+          }}
         />
-        <Pressable style={styles.btn} onPress={handleSignup}>
+        <Controller
+          control={control}
+          name="name"
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error }
+          }) => (
+            <View>
+              <TextInput
+                style={{
+                  ...styles.input,
+                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                }}
+                onBlur={onBlur}
+                placeholder="Nombre"
+                value={value}
+                onChangeText={onChange}
+              />
+              {errors.name && (
+                <Text style={styles.errorText}>{error.message}</Text>
+              )}
+            </View>
+          )}
+          rules={{
+            required: 'Ingresa tu nombre',
+            minLength: {
+              value: 3,
+              message: 'El nombre debe tener al menos 3 caractéres'
+            }
+          }}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error }
+          }) => (
+            <View>
+              <TextInput
+                style={{
+                  ...styles.input,
+                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                }}
+                onBlur={onBlur}
+                placeholder="Contraseña"
+                value={value}
+                onChangeText={onChange}
+                secureTextEntry
+              />
+              {errors.password && (
+                <Text style={styles.errorText}>{error.message}</Text>
+              )}
+            </View>
+          )}
+          rules={{
+            required: 'Ingresa tu contraseña',
+            minLength: {
+              value: 8,
+              message: 'La contraseña debe tener al menos 8 caracteres'
+            }
+          }}
+        />
+        <Pressable style={styles.btn} onPress={handleSubmit(onSubmit, onError)}>
           <Text style={styles.btnText}>Registrarme</Text>
         </Pressable>
       </View>
@@ -79,5 +207,10 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: COLORS.primaryWhite
+  },
+  errorText: {
+    color: COLORS.error,
+    fontSize: 12,
+    marginTop: 4
   }
 });
