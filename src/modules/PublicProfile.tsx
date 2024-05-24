@@ -1,23 +1,32 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-import User from './User';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import Social from '../components/Social';
+import { COLORS } from '../colors';
+const photoUser1 = require('../../assets/avatar3.png');
 
 export default function PublicProfile() {
   const user = { id: '0', name: 'John', expertise: 'Web dev' };
   return (
     <>
       <View style={styles.container2}>
-        <User item={user} />
+        <View style={styles.userContainer}>
+          <View style={styles.heading}>
+            <Image source={photoUser1} style={styles.userImg} />
+            <View>
+              <Text style={styles.title}>{'John Hernandez'}</Text>
+              <Text style={styles.position}>{'Diseñador'}</Text>
+            </View>
+          </View>
+        </View>
         <View style={styles.goal}>
           <Social />
-          <Text>Sobre mi: </Text>
           <Text>
-            Ayesha Bazmi is a results-driven Marketing Manager with a passion
-            for leveraging innovative strategies to drive brand growth and
-            customer engagement in the ever-evolving digital landscape.
+            Mi nombre es John Hernandez, soy diseñador gráfico y me especializo
+            en el diseño de interfaces de usuario. Me encanta crear diseños que
+            sean simples, hermosos y fáciles de usar. Cuando no estoy
+            codificando, me gusta dibujar, hacer yoga y jugar videojuegos.
           </Text>
-          <Button title="Follow" />
+          {/* <Button title="Follow" /> */}
         </View>
       </View>
     </>
@@ -51,5 +60,36 @@ const styles = StyleSheet.create({
   },
   goal: {
     marginTop: 20
+  },
+  heading: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
+  },
+
+  userImg: { width: 60, height: 60, borderRadius: 100 },
+
+  title2: {
+    fontWeight: '500',
+    color: COLORS.green,
+    fontSize: 16,
+    marginTop: 0
+  },
+
+  position: {
+    marginTop: 2,
+    fontSize: 14,
+    color: '#777'
+  },
+
+  userContainer: {
+    paddingTop: 24,
+    marginBottom: 36,
+    paddingRight: 36,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 });

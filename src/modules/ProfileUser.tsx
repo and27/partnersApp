@@ -2,7 +2,7 @@ import { Image, Text, View, StyleSheet, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Social from '../components/Social';
 
-const img = require('../../assets/persona.png');
+const img = require('../../assets/avatar4.jpg');
 
 export default function ProfileUser({ item }) {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
 
   listItemSubtitle: {
-    color: '#777'
+    color: '#444'
   },
 
   userImg: {
