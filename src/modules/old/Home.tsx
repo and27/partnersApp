@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { COLORS } from '../colors';
 
-const photoUser1 = require('../../assets/persona.png');
 const emprendimiento = require('../../assets/emprendimiento.png');
 const ciencia = require('../../assets/ciencia.png');
 const eventos = require('../../assets/eventos.png');
@@ -16,40 +15,47 @@ export default function Home() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
-        <View style={styles.userContainer}>
+        {/* <View style={styles.userContainer}>
           <View style={styles.heading}>
             <Image source={photoUser1} style={styles.userImg} />
             <View>
-              <Text style={styles.title}>{'Ayesha'}</Text>
-              <Text style={styles.position}>{'Marketing Manager'}</Text>
+              <Text style={styles.title}>{'Erick Cadena'}</Text>
+              <Text style={styles.position}>{'Biólogo'}</Text>
             </View>
           </View>
-        </View>
+          <Ionicons name="notifications" size={20} color={COLORS.green} />
+        </View> */}
         <Text style={styles.sectionTitle}>Áreas de interes</Text>
         <View style={styles.section}>
           <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('Noticias' as never)}
+            onPress={() => navigation.navigate('Ciencia' as never)}
           >
             <Image source={ciencia} style={styles.img} />
 
-            <Text>Ciencia</Text>
+            <Text style={{ color: '#111', fontWeight: '300', fontSize: 15 }}>
+              Ciencia
+            </Text>
           </Pressable>
           <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('Noticias' as never)}
+            onPress={() => navigation.navigate('Emprendimiento' as never)}
           >
             <Image source={emprendimiento} style={styles.img} />
 
-            <Text>Emprendimiento</Text>
+            <Text style={{ color: '#111', fontWeight: '300', fontSize: 15 }}>
+              Emprendimiento
+            </Text>
           </Pressable>
           <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('Noticias' as never)}
+            onPress={() => navigation.navigate('Eventos' as never)}
           >
             <Image source={eventos} style={styles.img} />
 
-            <Text>Eventos</Text>
+            <Text style={{ color: '#111', fontWeight: '300', fontSize: 15 }}>
+              Eventos
+            </Text>
           </Pressable>
         </View>
 
@@ -57,18 +63,22 @@ export default function Home() {
         <View style={styles.section}>
           <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('Noticias' as never)}
+            onPress={() => navigation.navigate('Equipos' as never)}
           >
             <Image source={equipos} style={styles.img} />
-            <Text>Equipos</Text>
+            <Text style={{ color: '#111', fontWeight: '300', fontSize: 15 }}>
+              Equipos
+            </Text>
           </Pressable>
           <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('Noticias' as never)}
+            onPress={() => navigation.navigate('Talento' as never)}
           >
             <Image source={talento} style={styles.img} />
 
-            <Text>Talento</Text>
+            <Text style={{ color: '#111', fontWeight: '300', fontSize: 15 }}>
+              Talento
+            </Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -86,14 +96,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 16,
     alignItems: 'center',
+    justifyContent: 'center',
     flexWrap: 'wrap'
   },
 
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     color: COLORS.primaryBlue,
-    marginTop: 24
+    textAlign: 'center',
+    marginTop: 24,
+    marginBottom: 8
   },
 
   card: {
@@ -106,9 +119,9 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: 70,
-    height: 70,
-    borderRadius: 100
+    width: 80,
+    height: 80,
+    borderRadius: 20
   },
 
   //profile user
@@ -119,22 +132,28 @@ const styles = StyleSheet.create({
     gap: 8
   },
 
-  userImg: { width: 50, height: 50 },
+  userImg: { width: 60, height: 60, borderRadius: 100 },
 
   title: {
     fontWeight: '500',
     color: COLORS.green,
+    fontSize: 16,
     marginTop: 0
   },
 
   position: {
     marginTop: 2,
-    fontSize: 12,
+    fontSize: 14,
     color: '#777'
   },
 
   userContainer: {
     paddingTop: 24,
-    marginBottom: 36
+    marginBottom: 36,
+    paddingRight: 36,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 });

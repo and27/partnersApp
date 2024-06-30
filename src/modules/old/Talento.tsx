@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LearningCard from '../components/LearningCard';
 import { COLORS } from '../colors';
@@ -7,54 +7,55 @@ import { COLORS } from '../colors';
 const photoUser3 = require('../../assets/persona2.png');
 const photoUser2 = require('../../assets/persona3.png');
 const photoUser1 = require('../../assets/persona.png');
+const windowWidth = Dimensions.get('window').width;
 
-export default function Board() {
+export default function Talento() {
   const learningPaths = [
     {
-      title: 'Programación y Desarrollo de Software',
+      title: 'Legal',
       category: 'Iniciando',
       steps: [
         {
-          title: 'Marie Clark',
-          position: 'Abogada',
+          title: 'Fernando González',
+          position: 'Jurista creativo',
           description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
+            'Expertise legal innovador. Resuelvo desafíos con ingenio. Diseñemos juntos el éxito legal. Contrátame para destacar en estrategia y legalidad.'
         },
         {
-          title: 'Ana Rodriguez',
-          position: 'Diseñadora Gráfica',
+          title: 'Daniel Rodriguez',
+          position: 'Abogado estratégico disponible',
           description:
-            'En mi carrera creativa, Partners ha sido un lugar donde puedo expresar mi visión artística y contribuir ...'
+            'Experiencia disruptiva y soluciones innovadoras. Diseñemos el camino hacia el éxito legal. ¡Contrátame para una asesoría legal de vanguardia!'
         },
         {
           title: 'Carlos López',
-          position: 'Gerente de Ventas',
+          position: 'Jurista con visión',
           description:
-            'Trabajar con Partners me ha permitido liderar un equipo de ventas excepcionales y alcanzar metas comerciales ...'
+            'Resuelvo desafíos legales con creatividad y expertise. Diseñemos juntos soluciones innovadoras. ¡Contrátame para liderar en la excelencia jurídica!'
         }
       ]
     },
     {
-      title: 'Ciencia y Tecnología',
+      title: 'Diseño',
       category: 'Desarrollo',
       steps: [
         {
-          title: 'Ayesha Bazmi',
-          position: 'Abogada',
+          title: 'Andrés Fernando',
+          position: 'Diseñador',
           description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
+            'Diseñador visionario listo para elevar tu marca. Fusiono estilo y función para crear experiencias visuales inolvidables. ¡Contrátame y redefine tu impacto visual!'
         },
         {
           title: 'David Smith',
-          position: 'Ingeniero de Software',
+          position: 'Creador visual ',
           description:
-            'Partners me ha brindado la oportunidad de trabajar en proyectos innovadores y colaborar ...'
+            'Transformo ideas en estilos impactantes. Elevemos tu marca con diseño significativo. ¡Contrátame para destacar en creatividad visual!'
         },
         {
-          title: 'Ayesha Bazmi',
-          position: 'Abogada',
+          title: 'Derick Fernandez',
+          position: 'Diseñador innovador ',
           description:
-            'Partners ha sido importante en mi vida para encontrar a un gran equipo y lograr continuar mi proyecto con personas comprometidas'
+            'Transformo ideas en experiencias visuales impactantes. ¡Contrátame para llevar tu marca a nuevos horizontes estéticos y funcionales!'
         }
       ]
     }
@@ -63,7 +64,7 @@ export default function Board() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
-        <Text>Equipos</Text>
+        <Text>Talento</Text>
         <TextInput style={styles.input} placeholder="🔍 Buscar" />
         {learningPaths.map(path => {
           return (
@@ -138,6 +139,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
     marginTop: 8,
-    backgroundColor: COLORS.primaryWhite
+    backgroundColor: COLORS.primaryWhite,
+    width: windowWidth - 36
   }
 });
