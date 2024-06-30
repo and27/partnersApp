@@ -65,7 +65,9 @@ export default function Signup() {
   return (
     <>
       <View style={styles.container2}>
-        <Image source={img} style={styles.logo} />
+        <View style={styles.logoContainer}>
+          <Image source={img} style={styles.logo} />
+        </View>
         <Controller
           control={control}
           name="email"
@@ -77,7 +79,7 @@ export default function Signup() {
               <TextInput
                 style={{
                   ...styles.input,
-                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                  borderColor: error ? COLORS.error : COLORS.lightGray
                 }}
                 onBlur={onBlur}
                 placeholder="Correo"
@@ -108,7 +110,7 @@ export default function Signup() {
               <TextInput
                 style={{
                   ...styles.input,
-                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                  borderColor: error ? COLORS.error : COLORS.lightGray
                 }}
                 onBlur={onBlur}
                 placeholder="Nombre"
@@ -139,7 +141,7 @@ export default function Signup() {
               <TextInput
                 style={{
                   ...styles.input,
-                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                  borderColor: error ? COLORS.error : COLORS.lightGray
                 }}
                 onBlur={onBlur}
                 placeholder="Contraseña"
@@ -190,9 +192,16 @@ const styles = StyleSheet.create({
     width: windowWidth - 40,
     backgroundColor: COLORS.primaryWhite
   },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   logo: {
-    width: '70%',
-    height: 110,
+    width: 160,
+    height: 'auto',
+    objectFit: 'contain',
+    aspectRatio: 2,
     marginBottom: 30
   },
   btn: {

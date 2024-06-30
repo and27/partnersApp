@@ -15,6 +15,8 @@ import { COLORS } from '../colors';
 import { Context } from '../../App';
 import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { login } from '../utils/supabase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '../components/Button';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
@@ -67,7 +69,12 @@ export default function Login() {
     };
     const parsedUserInfo = JSON.stringify(userInfo);
 
-    // storeDataLocally({ key: 'user', value: parsedUserInfo });
+    try {
+      await AsyncStorage.setItem('user', parsedUserInfo);
+    } catch (e) {
+      console.error(e);
+    }
+
     setIsLoading(false);
     setIsSignedIn(true);
     navigation.navigate('Perfil' as never);
@@ -76,7 +83,9 @@ export default function Login() {
   return (
     <>
       <View style={styles.container2}>
-        <Image source={img} style={styles.logo} />
+        <View style={styles.logoContainer}>
+          <Image source={img} style={styles.logo} />
+        </View>
         <Controller
           control={control}
           name="email"
@@ -88,7 +97,7 @@ export default function Login() {
               <TextInput
                 style={{
                   ...styles.input,
-                  borderColor: error ? COLORS.error : COLORS.primaryBlack
+                  borderColor: error ? COLORS.error : COLORS.lightGray
                 }}
                 onBlur={onBlur}
                 placeholder="Correo"
@@ -117,10 +126,12 @@ export default function Login() {
           }) => (
             <View>
               <TextInput
-                style={{
-                  ...styles.input,
-                  borderColor: error ? COLORS.error : COLORS.primaryBlack
-                }}
+                style={[
+                  styles.input,
+                  {
+                    borderColor: error ? COLORS.error : COLORS.lightGray
+                  }
+                ]}
                 onBlur={onBlur}
                 placeholder="Contraseña"
                 value={value}
@@ -128,7 +139,9 @@ export default function Login() {
                 secureTextEntry
               />
               {errors.password && (
-                <Text style={styles.errorText}>{error.message}</Text>
+                <Text style={[styles.errorText, { marginBottom: 16 }]}>
+                  {error.message}
+                </Text>
               )}
             </View>
           )}
@@ -141,20 +154,20 @@ export default function Login() {
           }}
         />
 
-        <Pressable style={styles.btn} onPress={handleSubmit(onSubmit, onError)}>
-          <Text style={styles.btnText}>
-            {isLoading ? <ActivityIndicator size="small" /> : 'Ingresa'}
-          </Text>
-        </Pressable>
+        <Button onPress={handleSubmit(onSubmit, onError)}>
+          {isLoading ? <ActivityIndicator size="small" /> : 'Ingresa'}
+        </Button>
         <Pressable>
-          <Text style={styles.btnSecondary}>Olvidé mi contraseña</Text>
+          <Text style={[styles.btnSecondary, { marginTop: 16 }]}>
+            Olvidé mi contraseña
+          </Text>
         </Pressable>
         <Pressable
           onPress={() => {
             navigation.navigate('Registro' as never);
           }}
         >
-          <Text style={styles.btnSecondary}>Registrarme</Text>
+          <Text style={[styles.btnSecondary]}>Registrarme</Text>
         </Pressable>
       </View>
     </>
@@ -183,26 +196,19 @@ const styles = StyleSheet.create({
     width: windowWidth - 40,
     backgroundColor: COLORS.primaryWhite
   },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   logo: {
-    width: '100%',
-    aspectRatio: 1.8,
+    width: 160,
+    height: 'auto',
+    objectFit: 'contain',
+    aspectRatio: 2,
     marginBottom: 30
   },
-  btn: {
-    backgroundColor: COLORS.green,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 48,
-    marginTop: 8,
-    marginBottom: 16,
-    alignSelf: 'stretch',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  btnText: {
-    color: COLORS.primaryWhite,
-    fontSize: 16
-  },
+
   btnSecondary: {
     color: COLORS.primaryBlack,
     fontSize: 16,
