@@ -1,37 +1,49 @@
 import { Image, Text, View, StyleSheet, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Social from '../components/Social';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 
 const img = require('../../assets/avatar4.jpg');
 
 export default function ProfileUser({ item }) {
-  const navigation = useNavigation();
+  const [userEmail, setUserEmail] = useState<string>();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await AsyncStorage.getItem('user');
+      if (user) setUserEmail(JSON.parse(user).name);
+    };
+
+    getUser();
+  }, []);
+
   return (
-    <View style={styles.listItem}>
-      <Image source={img} style={styles.userImg} />
-      <View style={styles.userInfo}>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.listItemSubtitle}>{item.expertise}</Text>
-        <Text style={styles.listItemSubtitle}>{item.city}</Text>
+    <View>
+      <View style={styles.listItem}>
+        <Image source={img} style={styles.userImg} />
+        <View style={styles.userInfo}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.listItemSubtitle}>{userEmail}</Text>
+          <Text style={styles.listItemSubtitle}>{item.expertise}</Text>
+        </View>
       </View>
-      <Social />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   listItem: {
-    marginBottom: 4,
+    marginBottom: 8,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
     gap: 8,
-    paddingVertical: 16,
-    alignItems: 'center'
+    paddingTop: 36
   },
 
   userInfo: {
     display: 'flex',
-    alignItems: 'center'
+    gap: 2
   },
 
   title: {
@@ -40,12 +52,13 @@ const styles = StyleSheet.create({
   },
 
   listItemSubtitle: {
-    color: '#444'
+    color: '#444',
+    fontSize: 12
   },
 
   userImg: {
-    width: 70,
-    height: 70,
+    width: 56,
+    height: 56,
     borderRadius: 100
   },
 

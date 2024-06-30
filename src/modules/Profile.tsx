@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../../App';
 import { ExperienceList } from '../components/ExperienceList';
 import { COLORS } from '../colors';
+import Social from '../components/Social';
 
 const UserSection = ({ title, items }) => (
   <View style={styles.section}>
@@ -27,6 +28,16 @@ export default function Profile() {
     city: 'Quito'
   };
 
+  const userInfo = {
+    about:
+      'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
+    experience: [
+      'Investigador en microbiología',
+      'Profesor de biología',
+      'Consultor en salud ambiental'
+    ]
+  };
+
   const { setIsSignedIn } = useContext(Context);
   return (
     <>
@@ -35,25 +46,19 @@ export default function Profile() {
         <View style={styles.containerInner}>
           <View style={styles.goal}>
             <Text style={styles.title}>Sobre mi: </Text>
-            <Text style={styles.description}>
-              Soy un biólogo apasionado y especializado en microbiología,
-              dedicado a explorar el fascinante mundo de los microorganismos.
-            </Text>
-            <Text style={styles.description}>
-              Mi enfoque se centra en entender las complejidades de la vida
-              microbiana y su impacto en la salud y el medio ambiente. Con una
-              mente analítica y curiosa, siempre busco nuevas formas de abordar
-              los desafíos científicos.
-            </Text>
+            <Text style={styles.description}>{userInfo.about}</Text>
           </View>
+          <Social />
           <ExperienceList />
         </View>
-        <Pressable style={styles.btn}>
-          <Text style={styles.btnText}>Contactar</Text>
-        </Pressable>
-        <Pressable onPress={() => setIsSignedIn(false)}>
-          <Text style={{ paddingVertical: 24 }}>Cerrar sesión</Text>
-        </Pressable>
+        <View>
+          <Pressable style={styles.btn}>
+            <Text style={styles.btnText}>Editar </Text>
+          </Pressable>
+          <Pressable onPress={() => setIsSignedIn(false)}>
+            <Text style={{ paddingVertical: 8 }}>Cerrar sesión</Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </>
   );
@@ -62,14 +67,13 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container2: {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'flex-start',
-    marginTop: 20
+    marginTop: 20,
+    paddingHorizontal: 32
   },
   containerInner: {
     display: 'flex',
-    alignItems: 'flex-start',
-    paddingHorizontal: 36
+    alignItems: 'flex-start'
   },
   title: {
     fontSize: 18,
@@ -78,9 +82,10 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   description: {
-    fontSize: 13,
+    fontSize: 12,
+    lineHeight: 16,
     fontWeight: '300',
-    marginBottom: 8
+    marginBottom: 16
   },
   menu: {
     flexDirection: 'row',
@@ -91,6 +96,7 @@ const styles = StyleSheet.create({
   section: {
     marginTop: 24
   },
+
   projects: { display: 'flex', flexDirection: 'row', gap: 8, marginTop: 4 },
   card: {
     borderWidth: 1,
@@ -107,11 +113,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 48,
     marginTop: 16,
-    marginBottom: 24,
     alignSelf: 'center',
     display: 'flex',
     alignItems: 'center',
-    width: 200
+    width: '100%'
   },
   btnText: {
     color: COLORS.primaryWhite,
