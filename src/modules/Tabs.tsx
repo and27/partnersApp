@@ -2,9 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import UsersListP from './UsersListP';
-import MyStack, { LoginStack } from './Stack';
+import MyStack, { LoginStack, ProfileStack } from './Stack';
 import Chat from './Chat';
-import Profile from './Profile';
 import { COLORS } from '../colors';
 
 const Tab = createBottomTabNavigator();
@@ -79,7 +78,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Perfil"
-        component={Profile}
+        component={ProfileStack}
         options={{
           headerShown: false,
           tabBarShowLabel: false,

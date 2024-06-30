@@ -4,7 +4,7 @@ import PublicProfile from './PublicProfile';
 import Login from './Login';
 import Signup from './Signup';
 import HomeNews from './HomeNews';
-import { Emprendimiento } from './old/Emprendimiento';
+import UserInfoForm from './UserForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +22,6 @@ function MyStack() {
       }}
     >
       <Stack.Screen name="Inicio" component={HomeNews} />
-      <Stack.Screen name="Emprendimiento" component={Emprendimiento} />
       <Stack.Screen name="Perfil" component={Profile} />
       <Stack.Screen name="PublicProfile" component={PublicProfile} />
     </Stack.Navigator>
@@ -39,6 +38,25 @@ function LoginStack() {
   );
 }
 
-export { LoginStack };
+function ProfileStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          color: '#888',
+          fontSize: 14
+        },
+        headerStyle: {
+          backgroundColor: '#fafafa'
+        }
+      }}
+    >
+      <Stack.Screen name="Perfil" component={Profile} />
+      <Stack.Screen name="UserForm" component={UserInfoForm} />
+    </Stack.Navigator>
+  );
+}
+
+export { LoginStack, ProfileStack };
 
 export default MyStack;
