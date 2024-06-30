@@ -1,6 +1,7 @@
 import { Image, Text, View, StyleSheet, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import { COLORS } from '../colors';
 
 const img = require('../../assets/avatar4.jpg');
 
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: '#2E4D8E',
+    color: COLORS.green,
     fontWeight: '500'
   },
 

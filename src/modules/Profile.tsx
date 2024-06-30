@@ -6,6 +6,7 @@ import { Context } from '../../App';
 import { ExperienceList } from '../components/ExperienceList';
 import { COLORS } from '../colors';
 import Social from '../components/Social';
+import { useNavigation } from '@react-navigation/native';
 
 const UserSection = ({ title, items }) => (
   <View style={styles.section}>
@@ -21,6 +22,9 @@ const UserSection = ({ title, items }) => (
 );
 
 export default function Profile() {
+  const { setIsSignedIn } = useContext(Context);
+  const navigation = useNavigation();
+
   const user = {
     id: '0',
     name: 'Erick Cadena ',
@@ -38,25 +42,32 @@ export default function Profile() {
     ]
   };
 
-  const { setIsSignedIn } = useContext(Context);
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
         <ProfileUser item={user} />
         <View style={styles.containerInner}>
           <View style={styles.goal}>
-            <Text style={styles.title}>Sobre mi: </Text>
+            <Text style={styles.title}>Sobre mi</Text>
             <Text style={styles.description}>{userInfo.about}</Text>
           </View>
           <Social />
-          <ExperienceList />
+          <View style={styles.section}>
+            <Text style={styles.title}>Experiencia </Text>
+            <ExperienceList />
+          </View>
         </View>
         <View>
-          <Pressable style={styles.btn}>
+          <Pressable
+            style={styles.btn}
+            onPress={() => navigation.navigate('UserForm' as never)}
+          >
             <Text style={styles.btnText}>Editar </Text>
           </Pressable>
           <Pressable onPress={() => setIsSignedIn(false)}>
-            <Text style={{ paddingVertical: 8 }}>Cerrar sesión</Text>
+            <Text style={{ paddingVertical: 12, textAlign: 'center' }}>
+              Cerrar sesión
+            </Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -66,26 +77,28 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container2: {
+    backgroundColor: COLORS.primaryWhite,
+    minHeight: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
-    marginTop: 20,
-    paddingHorizontal: 32
+    paddingHorizontal: 24
   },
   containerInner: {
     display: 'flex',
     alignItems: 'flex-start'
   },
   title: {
-    fontSize: 18,
-    marginBottom: 8,
-    color: '#2E4D8E',
-    fontWeight: '500'
+    fontSize: 12,
+    color: COLORS.primaryBlue,
+    fontWeight: '600',
+    marginBottom: 8
   },
   description: {
     fontSize: 12,
     lineHeight: 16,
-    fontWeight: '300',
-    marginBottom: 16
+    fontWeight: '400',
+    marginBottom: 16,
+    color: COLORS.darkGray
   },
   menu: {
     flexDirection: 'row',

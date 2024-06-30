@@ -22,12 +22,11 @@ export const ExperienceList = () => {
   ];
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.listTitle}>Experiencia</Text>
       {data.map((item, index) => (
         <View style={styles.listElement} key={index}>
           <Octicons name="dot-fill" size={12} color="#444" />
           <View>
-            <Text style={{ color: '#555' }}>{item.position}</Text>
+            <Text style={styles.title}>{item.position}</Text>
             {/* <Text style={styles.listElementSubtitle}>{item.company}</Text> */}
           </View>
         </View>
@@ -37,15 +36,8 @@ export const ExperienceList = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 36
-  },
+  container: {},
 
-  listTitle: {
-    fontSize: 18,
-    marginBottom: 16,
-    color: '#2E4D8E'
-  },
   listElement: {
     marginBottom: 12,
     display: 'flex',
@@ -54,8 +46,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   listElementSubtitle: {
+    fontSize: 13,
+    fontWeight: '300'
+  },
+  title: {
     fontSize: 12,
-    color: '#2E4D8E',
-    paddingVertical: 2
+    fontWeight: '400',
+    color: COLORS.darkGray
   }
 });
