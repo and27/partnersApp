@@ -1,4 +1,4 @@
-import { Image, Text, View, StyleSheet, Button } from 'react-native';
+import { Image, Text, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function User({ item }) {
@@ -12,10 +12,11 @@ export default function User({ item }) {
         <Text style={styles.listItemSubtitle}>{item.city}</Text>
       </View>
       <View style={styles.social}>
-        <Button
-          title="view"
+        <Pressable
           onPress={() => navigation.navigate('PublicProfile' as never)}
-        ></Button>
+        >
+          <Text>Visitar</Text>
+        </Pressable>
       </View>
     </View>
   );
