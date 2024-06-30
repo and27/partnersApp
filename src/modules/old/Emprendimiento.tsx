@@ -1,10 +1,10 @@
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { COLORS } from '../../colors';
-const photoUser1 = require('../../assets/avatar8.jpg');
-const photoUser2 = require('../../assets/avatar7.png');
+const photoUser1 = require('../../../assets/avatar8.jpg');
+const photoUser2 = require('../../../assets/avatar7.png');
 
-const emprendimiento1 = require('../../assets/emprendimiento1.png');
-const emprendimiento2 = require('../../assets/emprendimiento2.png');
+const emprendimiento1 = require('../../../assets/emprendimiento1.png');
+const emprendimiento2 = require('../../../assets/emprendimiento2.png');
 
 export const Emprendimiento = () => {
   return (
