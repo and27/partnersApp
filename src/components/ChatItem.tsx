@@ -1,11 +1,31 @@
-import { Image, Text, View, StyleSheet, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  Pressable,
+  Linking
+} from 'react-native';
 import { COLORS } from '../colors';
 
 export default function ChatItem({ item }) {
-  const navigation = useNavigation();
+  const openWhatsApp = (number, text) => {
+    let url = `whatsapp://send?phone=${number}&text=${encodeURIComponent(
+      text
+    )}`;
+    Linking.openURL(url)
+      .then(() => {
+        console.log('WhatsApp opened');
+      })
+      .catch(() => {
+        alert('Make sure WhatsApp is installed on your device');
+      });
+  };
   return (
-    <View style={styles.listItem}>
+    <Pressable
+      style={styles.listItem}
+      onPress={() => openWhatsApp('+593997019475', 'Hello!')}
+    >
       <Image source={item.img} style={styles.userImg} />
       <View
         style={{
@@ -26,7 +46,7 @@ export default function ChatItem({ item }) {
           <Text style={styles.time}>25m</Text>
         </View>
         <View style={styles.chat}>
-          <Text style={styles.chatText}>Hola, ¿cómo estás?</Text>
+          <Text style={styles.chatText}>{item.message}</Text>
           <View
             style={{
               height: 10,
@@ -37,7 +57,7 @@ export default function ChatItem({ item }) {
           ></View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -52,16 +72,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
     borderBottomWidth: 0.5
   },
-
   listItemTitle: {
     fontWeight: '600',
-    color: '#555'
+    color: COLORS.green
   },
-
-  listItemSubtitle: {
-    color: '#777'
-  },
-
   userImg: {
     width: 42,
     height: 42,
@@ -74,12 +88,12 @@ const styles = StyleSheet.create({
     width: '90%'
   },
   time: {
-    color: '#777',
-    fontSize: 12,
+    color: '#666',
+    fontSize: 11,
     marginBottom: 4
   },
   chatText: {
-    color: COLORS.primaryBlue,
+    color: '#666',
     fontSize: 12
   }
 });

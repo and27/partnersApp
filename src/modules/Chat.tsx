@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import users from '../users';
 import ChatItem from '../components/ChatItem';
 import { COLORS } from '../colors';
+const logo = require('../../assets/logo.png');
 
 export default function Chat() {
   return (
@@ -14,6 +15,14 @@ export default function Chat() {
           <Text>Blocked</Text>
         </View>
         <View style={{ padding: 16 }}>
+          <ChatItem
+            item={{
+              id: '1',
+              name: 'Mabe de Partners',
+              img: logo,
+              message: 'Bienvenido a tu nuevo espacio de conexión.s'
+            }}
+          />
           <FlatList
             data={users}
             renderItem={({ item }) => <ChatItem item={item} />}
