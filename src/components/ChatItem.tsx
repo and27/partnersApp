@@ -7,14 +7,35 @@ export default function ChatItem({ item }) {
   return (
     <View style={styles.listItem}>
       <Image source={item.img} style={styles.userImg} />
-      <View>
-        <Text style={styles.listItemTitle}>{item.name}</Text>
-        <Text style={styles.listItemSubtitle}>11:00</Text>
-      </View>
-      <View style={styles.chat}>
-        <Text style={styles.chatText}>
-          Hola Estoy interesada en trabajar contigo.
-        </Text>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2
+        }}
+      >
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '90%'
+          }}
+        >
+          <Text style={styles.listItemTitle}>{item.name}</Text>
+          <Text style={styles.time}>25m</Text>
+        </View>
+        <View style={styles.chat}>
+          <Text style={styles.chatText}>Hola, ¿cómo estás?</Text>
+          <View
+            style={{
+              height: 10,
+              width: 10,
+              backgroundColor: COLORS.primaryBlue,
+              borderRadius: 100
+            }}
+          ></View>
+        </View>
       </View>
     </View>
   );
@@ -32,21 +53,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5
   },
 
-  listItemTitle: {},
+  listItemTitle: {
+    fontWeight: '600',
+    color: '#555'
+  },
 
   listItemSubtitle: {
     color: '#777'
   },
 
   userImg: {
-    width: 50,
-    height: 50,
+    width: 42,
+    height: 42,
     borderRadius: 100
   },
   chat: {
-    alignSelf: 'center',
-    marginLeft: 32,
-    maxWidth: 150
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%'
+  },
+  time: {
+    color: '#777',
+    fontSize: 12,
+    marginBottom: 4
   },
   chatText: {
     color: COLORS.primaryBlue,

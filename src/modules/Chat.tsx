@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  TextInput
-} from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import users from '../users';
 import ChatItem from '../components/ChatItem';
 import { COLORS } from '../colors';
@@ -15,19 +8,29 @@ export default function Chat() {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <TextInput style={styles.input} placeholder="🔍 Buscar" />
-        <FlatList
-          data={users}
-          renderItem={({ item }) => <ChatItem item={item} />}
-          keyExtractor={item => item.id}
-        />
+        <View style={styles.filters}>
+          <Text style={styles.filterAll}>All</Text>
+          <Text>Active</Text>
+          <Text>Blocked</Text>
+        </View>
+        <View style={{ padding: 16 }}>
+          <FlatList
+            data={users}
+            renderItem={({ item }) => <ChatItem item={item} />}
+            keyExtractor={item => item.id}
+          />
+        </View>
       </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 16 },
+  container: {
+    backgroundColor: COLORS.primaryWhite,
+    minHeight: '100%'
+  },
+
   title: {
     fontSize: 18,
     marginBottom: 8
@@ -50,16 +53,5 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     paddingHorizontal: 5
-  },
-
-  input: {
-    height: 40,
-    alignSelf: 'stretch',
-    borderColor: '#bbb',
-    borderWidth: 1,
-    padding: 5,
-    borderRadius: 8,
-    marginTop: 8,
-    backgroundColor: COLORS.primaryWhite
   }
 });
