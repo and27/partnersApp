@@ -13,6 +13,7 @@ const photoUser2 = require('../../assets/avatar6.jpg');
 
 const ciencia1 = require('../../assets/ciencia1.png');
 const ciencia2 = require('../../assets/ciencia2.png');
+const partners = require('../../assets/logo.png');
 
 const items = [
   {
@@ -20,29 +21,34 @@ const items = [
       'CEDIA se complace en anunciar su próximo congreso sobre emprendimiento, donde se reunirán destacados expertos y emprendedores de todo el mundo.',
     name: 'Partners',
     position: 'Administrador',
-    img: ciencia1
+    img: ciencia1,
+    userImg: partners,
+    category: 'Concursos'
   },
   {
     title:
       'DEO se enorgullece de presentar el evento internacional de emprendimiento más destacado del año.',
     name: 'Partners',
     position: 'Administrador',
-    img: ciencia2
+    img: ciencia2,
+    userImg: partners,
+    category: 'Concursos'
   },
   {
     title:
       'Busco equipo para participar en la competencia de robótica de la Universidad de Cuenca. Si estás interesado, ¡contáctame!',
     name: 'Erick Cadena',
     position: 'Biólogo',
-    img: ciencia1
+    img: ciencia1,
+    userImg: photoUser1,
+    category: 'Talento'
   }
 ];
 
-const filters = ['Todos', 'Eventos', 'Emprendimiento', 'Ciencia'];
+const filters = ['Todos', 'Concursos', 'Talento'];
 
 export default function HomeNews() {
   const [filter, setFilter] = useState<string>('Todos');
-  console.log(filter);
 
   return (
     <ScrollView>
@@ -72,22 +78,21 @@ export default function HomeNews() {
         })}
       </View>
 
-      {items.map((item, index) => (
-        <View style={styles.card} key={index}>
-          <View style={styles.heading}>
-            <Image
-              source={index % 2 === 0 ? photoUser1 : photoUser2}
-              style={styles.userImg}
-            />
-            <View>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text style={styles.position}>{item.position}</Text>
+      {items
+        .filter(item => filter === 'Todos' || item.category === filter)
+        .map((item, index) => (
+          <View style={styles.card} key={index}>
+            <View style={styles.heading}>
+              <Image source={item.userImg} style={styles.userImg} />
+              <View>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.position}>{item.position}</Text>
+              </View>
             </View>
+            <Text style={styles.position}>{item.title}</Text>
+            <Image style={styles.cardImg} source={item.img} />
           </View>
-          <Text style={styles.position}>{item.title}</Text>
-          <Image style={styles.cardImg} source={item.img} />
-        </View>
-      ))}
+        ))}
     </ScrollView>
   );
 }

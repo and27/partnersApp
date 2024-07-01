@@ -1,10 +1,12 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../colors';
 
 interface ButtonProps {
   onPress: () => void;
   btnStyles?: object;
   textStyles?: object;
+  iconName?: string;
   children: React.ReactNode;
 }
 
@@ -12,12 +14,20 @@ const Button = ({
   onPress,
   btnStyles,
   textStyles,
+  iconName,
   children,
   ...props
 }: ButtonProps) => {
   return (
     <Pressable style={[styles.btn, btnStyles]} onPress={onPress} {...props}>
       <Text style={[styles.btnText, textStyles]}>{children}</Text>
+      {iconName && (
+        <Ionicons
+          name={iconName as any}
+          size={20}
+          color={COLORS.primaryWhite}
+        />
+      )}
     </Pressable>
   );
 };
@@ -30,7 +40,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 48,
     alignSelf: 'stretch',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   btnText: {
     color: COLORS.primaryWhite
