@@ -59,7 +59,7 @@ export default function Signup() {
     }
 
     setIsSignedIn(true);
-    navigation.navigate('MainStack' as never);
+    navigation.navigate('UserForm' as never);
   };
 
   return (
