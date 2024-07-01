@@ -1,7 +1,16 @@
 import { Controller, useForm } from 'react-hook-form';
-import { StyleSheet, TextInput, View, Text, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  Dimensions,
+  Pressable
+} from 'react-native';
 import { COLORS } from '../colors';
 import Button from '../components/Button';
+import { useNavigation } from '@react-navigation/native';
+import { updateProfile } from '../utils/partnersDB';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -12,8 +21,18 @@ export default function UserInfoForm() {
     formState: { errors }
   } = useForm();
 
+  const onSubmit = async userInfo => {
+    const { data, error } = await updateProfile(userInfo);
+    if (error) {
+      console.log(error);
+    } else {
+      navigation.navigate('Perfil' as never);
+    }
+  };
+
+  const navigation = useNavigation();
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={control}
         name="name"
@@ -43,16 +62,41 @@ export default function UserInfoForm() {
           </View>
         )}
         rules={{
-          required: 'Ingresa tu contraseña',
-          minLength: {
-            value: 8,
-            message: 'La contraseña debe tener al menos 8 caracteres'
-          }
+          required: 'Ingresa tu nombre'
         }}
       />
       <Controller
         control={control}
-        name="about"
+        name="ocupation"
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error }
+        }) => (
+          <View style={{ height: 58 }}>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  borderColor: error ? COLORS.error : COLORS.lightGray
+                }
+              ]}
+              onBlur={onBlur}
+              placeholder="Ocupation"
+              value={value}
+              onChangeText={onChange}
+              secureTextEntry
+            />
+            {errors.ocupation && (
+              <Text style={[styles.errorText, { marginBottom: 16 }]}>
+                {error.message}
+              </Text>
+            )}
+          </View>
+        )}
+      />
+      <Controller
+        control={control}
+        name="bio"
         render={({
           field: { onChange, onBlur, value },
           fieldState: { error }
@@ -71,7 +115,7 @@ export default function UserInfoForm() {
               onChangeText={onChange}
               secureTextEntry
             />
-            {errors.about && (
+            {errors.bio && (
               <Text style={[styles.errorText, { marginBottom: 16 }]}>
                 {error.message}
               </Text>
@@ -79,11 +123,7 @@ export default function UserInfoForm() {
           </View>
         )}
         rules={{
-          required: 'Ingresa tu contraseña',
-          minLength: {
-            value: 8,
-            message: 'La contraseña debe tener al menos 8 caracteres'
-          }
+          required: 'Ingresa tu biografía'
         }}
       />
       <Controller
@@ -115,14 +155,24 @@ export default function UserInfoForm() {
           </View>
         )}
       />
-      <Button onPress={handleSubmit(() => console.log('submit'))}>
-        Guardar
-      </Button>
+      <Button onPress={handleSubmit(onSubmit)}>Guardar</Button>
+      <Pressable
+        style={{ paddingVertical: 16 }}
+        onPress={() => navigation.navigate('Perfil' as never)}
+      >
+        <Text>Omitir</Text>
+      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 24,
+    backgroundColor: COLORS.primaryWhite
+  },
   input: {
     height: 40,
     alignSelf: 'stretch',
