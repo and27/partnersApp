@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
-import ProfileUser from './ProfileUser';
+import ProfileUser from '../components/ProfileUser';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../../App';
 import { ExperienceList } from '../components/ExperienceList';
