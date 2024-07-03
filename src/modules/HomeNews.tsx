@@ -8,11 +8,9 @@ import {
   Pressable
 } from 'react-native';
 import { COLORS } from '../colors';
-
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 const photoUser1 = require('../../assets/avatar5.jpg');
-const photoUser2 = require('../../assets/avatar6.jpg');
 
 const ciencia1 = require('../../assets/ciencia1.png');
 const ciencia2 = require('../../assets/ciencia2.png');
@@ -87,23 +85,35 @@ export default function HomeNews() {
           .filter(item => filter === 'Todos' || item.category === filter)
           .map((item, index) => (
             <View style={styles.card} key={index}>
-              <View style={styles.heading}>
+              <Pressable
+                style={styles.heading}
+                onPress={() => navigation.navigate('PublicProfile' as never)}
+              >
                 <Image source={item.userImg} style={styles.userImg} />
                 <View>
                   <Text style={styles.title}>{item.name}</Text>
                   <Text style={styles.position}>{item.position}</Text>
                 </View>
-              </View>
-              <Text style={styles.position} numberOfLines={2}>
-                {item.title}
-              </Text>
-              <Image style={styles.cardImg} source={item.img} />
+              </Pressable>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('PostPage', {
+                    title: item.title,
+                    img: item.img
+                  })
+                }
+              >
+                <Text style={styles.position} numberOfLines={2}>
+                  {item.title}
+                </Text>
+                <Image style={styles.cardImg} source={item.img} />
+              </Pressable>
             </View>
           ))}
       </ScrollView>
       <Button
         iconName="add"
-        onPress={() => navigation.navigate('Post' as never)}
+        onPress={() => navigation.navigate('PostForm' as never)}
         btnStyles={styles.floatingButton}
         textStyles={{ fontSize: 14, fontWeight: '600' }}
       >

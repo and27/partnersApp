@@ -6,7 +6,7 @@ import Signup from './Signup';
 import HomeNews from './HomeNews';
 import UserInfoForm from './UserForm';
 import PostForm from './PostForm';
-import PostPage from './PostPage';
+import { PostPage } from './PostPage';
 
 const Stack = createNativeStackNavigator();
 
