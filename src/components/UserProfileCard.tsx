@@ -5,7 +5,7 @@ import { COLORS } from '../colors';
 
 const img = require('../../assets/avatar4.jpg');
 
-export default function ProfileUser({ item }) {
+export default function UserProfileCard({ user }) {
   const [userEmail, setUserEmail] = useState<string>();
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function ProfileUser({ item }) {
       <View style={styles.listItem}>
         <Image source={img} style={styles.userImg} />
         <View style={styles.userInfo}>
-          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.title}>{user.name}</Text>
           <Text style={styles.listItemSubtitle}>{userEmail}</Text>
-          <Text style={styles.listItemSubtitle}>{item.expertise}</Text>
+          <Text style={styles.listItemSubtitle}>{user.expertise}</Text>
         </View>
       </View>
     </View>
