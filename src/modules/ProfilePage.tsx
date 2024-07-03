@@ -1,27 +1,12 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
-import ProfileUser from '../components/ProfileUser';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../../App';
-import { ExperienceList } from '../components/ExperienceList';
 import { COLORS } from '../colors';
-import Social from '../components/Social';
 import { useNavigation } from '@react-navigation/native';
+import { UserProfileSection } from '../components/UserProfileSection';
 
-const UserSection = ({ title, items }) => (
-  <View style={styles.section}>
-    <Text>{title}</Text>
-    <View style={styles.projects}>
-      {items.map((item, index) => (
-        <View style={styles.card} key={index}>
-          <Text>{item}</Text>
-        </View>
-      ))}
-    </View>
-  </View>
-);
-
-export default function Profile() {
+export default function ProfilePage() {
   const { setIsSignedIn } = useContext(Context);
   const navigation = useNavigation();
 
@@ -45,18 +30,7 @@ export default function Profile() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
-        <ProfileUser item={user} />
-        <View style={styles.containerInner}>
-          <View style={styles.goal}>
-            <Text style={styles.title}>Sobre mi</Text>
-            <Text style={styles.description}>{userInfo.about}</Text>
-          </View>
-          <Social />
-          <View style={styles.section}>
-            <Text style={styles.title}>Experiencia </Text>
-            <ExperienceList />
-          </View>
-        </View>
+        <UserProfileSection user={user} userInfo={userInfo} />
         <View>
           <Pressable
             style={styles.btn}
@@ -111,12 +85,7 @@ const styles = StyleSheet.create({
   },
 
   projects: { display: 'flex', flexDirection: 'row', gap: 8, marginTop: 4 },
-  card: {
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 8,
-    backgroundColor: '#fff'
-  },
+
   goal: {
     marginTop: 20
   },

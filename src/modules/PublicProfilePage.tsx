@@ -1,33 +1,31 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
-import Social from '../components/Social';
+import { View, StyleSheet } from 'react-native';
 import { COLORS } from '../colors';
-const photoUser1 = require('../../assets/avatar3.png');
+import { UserProfileSection } from '../components/UserProfileSection';
+
+const user = {
+  id: '0',
+  name: 'Erick Cadena ',
+  expertise: 'Biólogo',
+  city: 'Quito'
+};
+
+const userInfo = {
+  about:
+    'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
+  experience: [
+    'Investigador en microbiología',
+    'Profesor de biología',
+    'Consultor en salud ambiental'
+  ]
+};
 
 export default function PublicProfile() {
   const user = { id: '0', name: 'John', expertise: 'Web dev' };
   return (
     <>
       <View style={styles.container2}>
-        <View style={styles.userContainer}>
-          <View style={styles.heading}>
-            <Image source={photoUser1} style={styles.userImg} />
-            <View>
-              <Text style={styles.title}>{'John Hernandez'}</Text>
-              <Text style={styles.position}>{'Diseñador'}</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.goal}>
-          <Social />
-          <Text>
-            Mi nombre es John Hernandez, soy diseñador gráfico y me especializo
-            en el diseño de interfaces de usuario. Me encanta crear diseños que
-            sean simples, hermosos y fáciles de usar. Cuando no estoy
-            codificando, me gusta dibujar, hacer yoga y jugar videojuegos.
-          </Text>
-          {/* <Button title="Follow" /> */}
-        </View>
+        <UserProfileSection user={user} userInfo={userInfo} />
       </View>
     </>
   );

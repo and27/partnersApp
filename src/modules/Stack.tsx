@@ -1,10 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Profile from './Profile';
-import PublicProfile from './PublicProfile';
+import ProfilePage from './ProfilePage';
+import PublicProfile from './PublicProfilePage';
 import Login from './Login';
 import Signup from './Signup';
 import HomeNews from './HomeNews';
 import UserInfoForm from './UserForm';
+import PostForm from './PostForm';
+import PostPage from './PostPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,8 +24,10 @@ function MyStack() {
       }}
     >
       <Stack.Screen name="Inicio" component={HomeNews} />
-      <Stack.Screen name="Perfil" component={Profile} />
+      <Stack.Screen name="PostForm" component={PostForm} />
+      <Stack.Screen name="Perfil" component={ProfilePage} />
       <Stack.Screen name="PublicProfile" component={PublicProfile} />
+      <Stack.Screen name="PostPage" component={PostPage} />
     </Stack.Navigator>
   );
 }
@@ -33,7 +37,14 @@ function LoginStack() {
     <Stack.Navigator>
       <Stack.Screen name="Ingresa" component={Login} />
       <Stack.Screen name="Registro" component={Signup} />
-      <Stack.Screen name="Perfil" component={Profile} />
+      <Stack.Screen
+        options={{
+          title: 'Tu info'
+        }}
+        name="UserForm"
+        component={UserInfoForm}
+      />
+      <Stack.Screen name="Perfil" component={ProfilePage} />
     </Stack.Navigator>
   );
 }
@@ -51,8 +62,14 @@ function ProfileStack() {
         }
       }}
     >
-      <Stack.Screen name="Perfil" component={Profile} />
-      <Stack.Screen name="UserForm" component={UserInfoForm} />
+      <Stack.Screen name="Perfil" component={ProfilePage} />
+      <Stack.Screen
+        options={{
+          title: 'Tu info'
+        }}
+        name="UserForm"
+        component={UserInfoForm}
+      />
     </Stack.Navigator>
   );
 }
