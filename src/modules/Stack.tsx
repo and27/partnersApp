@@ -28,6 +28,8 @@ function MyStack() {
       <Stack.Screen name="Perfil" component={ProfilePage} />
       <Stack.Screen name="PublicProfile" component={PublicProfile} />
       <Stack.Screen name="PostPage" component={PostPage} />
+      <Stack.Screen name="Ingresa" component={Login} />
+      <Stack.Screen name="Registro" component={Signup} />
     </Stack.Navigator>
   );
 }

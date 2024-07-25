@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import users from '../users';
 import ChatItem from '../components/ChatItem';
 import { COLORS } from '../colors';
+import { Context } from '../../App';
+import Login from './Login';
 const logo = require('../../assets/logo.png');
 
 export default function Chat() {
+  const { isSignedIn } = useContext(Context);
+
+  if (!isSignedIn) {
+    return <Login />;
+  }
   return (
     <>
       <SafeAreaView style={styles.container}>

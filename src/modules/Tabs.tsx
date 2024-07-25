@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import UsersListP from './UsersListP';
+import SuggestedConnections from './SuggestedConnections';
 import MyStack, { LoginStack, ProfileStack } from './Stack';
 import Chat from './Chat';
 import { COLORS } from '../colors';
@@ -15,6 +15,13 @@ function MyTabs() {
       screenOptions={{
         tabBarActiveTintColor: COLORS.green,
         tabBarInactiveTintColor: '#888',
+        headerStyle: {
+          backgroundColor: '#f8f8f8'
+        },
+        headerTitleStyle: {
+          color: '#888',
+          fontSize: 14
+        },
         tabBarStyle: {
           paddingVertical: 7,
           backgroundColor: '#f8f8f8',
@@ -43,11 +50,11 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Encuentra un equipo"
-        component={UsersListP}
+        name="Connections"
+        component={SuggestedConnections}
         options={{
+          title: 'Partners sugeridos',
           tabBarLabel: 'Partners',
-          headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -62,8 +69,9 @@ function MyTabs() {
         name="Chat"
         component={Chat}
         options={{
+          title: 'Mis partners',
           tabBarLabel: 'Mensajes',
-          headerShown: false,
+          headerShown: true,
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
             return (
@@ -80,8 +88,8 @@ function MyTabs() {
         name="Perfil"
         component={ProfileStack}
         options={{
-          headerShown: false,
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ focused }) => {
             return (
               <Ionicons
@@ -97,10 +105,10 @@ function MyTabs() {
   );
 }
 
-export default function Navigation({ isSignedIn }) {
+export default function Navigation() {
   return (
     <NavigationContainer>
-      {isSignedIn ? <MyTabs /> : <LoginStack />}
+      <MyTabs />
     </NavigationContainer>
   );
 }
