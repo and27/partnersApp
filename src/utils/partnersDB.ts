@@ -18,4 +18,12 @@ const getUserInfo = async userId => {
   return { data, error };
 };
 
-export { savePost, upsertUserInfo, getUserInfo };
+const getSuggestedConnections = async userId => {
+  const { data, error } = await supabase
+    .from('user')
+    .select('*')
+    .neq('uid', userId);
+  return { data, error };
+};
+
+export { savePost, upsertUserInfo, getUserInfo, getSuggestedConnections };

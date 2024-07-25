@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { COLORS } from '../colors';
 import Button from '../components/Button';
+import { getSuggestedConnections } from '../utils/partnersDB';
 
 const UserCard = ({ user }) => {
   return (
@@ -30,21 +31,36 @@ const UserCard = ({ user }) => {
   );
 };
 
-export default function UsersListP() {
+export default function SuggestedConnections() {
+  // const [suggestedConnection, setSuggestedConnection] = useState({});
+
+  // useEffect(() => {
+  //   const getConnections = async () => {
+  //     const userId = '79c99535-2e01-4266-9c69-03d3bc6e2bce';
+  //     const { data, error } = await getSuggestedConnections(userId);
+  //     if (error) {
+  //       console.error(error);
+  //     } else {
+  //       setSuggestedConnection(data[0]);
+  //     }
+  //   };
+
+  //   getConnections();
+  // }, []);
+
+  const suggestedConnection = {
+    name: 'Erick Cadena',
+    position: 'Biólogo',
+    description:
+      'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
+    img: require('../../assets/ciencia1.png')
+  };
   return (
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.innerContainer}>
           <TextInput style={styles.input} placeholder="🔍 Buscar" />
-          <UserCard
-            user={{
-              name: 'Erick Cadena',
-              position: 'Biólogo',
-              description:
-                'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
-              img: require('../../assets/ciencia1.png')
-            }}
-          />
+          <UserCard user={suggestedConnection} />
         </View>
       </SafeAreaView>
     </>

@@ -11,7 +11,9 @@ export default function App() {
   return (
     <>
       <GestureHandlerRootView>
-        <Context.Provider value={{ setIsSignedIn: setIsSignedIn }}>
+        <Context.Provider
+          value={{ setIsSignedIn: setIsSignedIn, isSignedIn: isSignedIn }}
+        >
           <StatusBar style="dark" />
           <Navigation isSignedIn={isSignedIn} />
         </Context.Provider>
