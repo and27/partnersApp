@@ -17,6 +17,7 @@ import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { login } from '../utils/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../components/Button';
+import { getUserInfo } from '../utils/partnersDB';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
@@ -63,16 +64,20 @@ export default function Login() {
       return setIsSignedIn(false);
     }
 
-    const userInfo = {
-      id: data?.session?.user?.id,
-      name: data?.session?.user?.email
-    };
-    const parsedUserInfo = JSON.stringify(userInfo);
-
-    try {
+    const userId = data?.session?.user?.id;
+    const { data: userInfo, error: userError } = await getUserInfo(userId);
+    if (error) {
+      console.error(error);
+    } else {
+      const user = {
+        id: userId,
+        name: userInfo[0]?.name,
+        bio: userInfo[0]?.bio,
+        city: userInfo[0]?.city,
+        ocupation: userInfo[0]?.ocupation
+      };
+      const parsedUserInfo = JSON.stringify(user);
       await AsyncStorage.setItem('user', parsedUserInfo);
-    } catch (e) {
-      console.error(e);
     }
 
     setIsLoading(false);
@@ -162,7 +167,7 @@ export default function Login() {
             {isLoading ? <ActivityIndicator size="small" /> : 'Ingresa'}
           </Button>
           <Pressable>
-            <Text style={[styles.btnSecondary, { marginTop: 16 }]}>
+            <Text style={[styles.btnSecondary, { marginTop: 8 }]}>
               Olvidé mi contraseña
             </Text>
           </Pressable>
@@ -218,7 +223,7 @@ const styles = StyleSheet.create({
   btnSecondary: {
     color: COLORS.primaryBlack,
     fontSize: 16,
-    marginTop: 8
+    padding: 10
   },
   errorText: {
     color: COLORS.error,

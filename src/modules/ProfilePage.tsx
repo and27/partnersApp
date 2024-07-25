@@ -5,29 +5,33 @@ import { Context } from '../../App';
 import { COLORS } from '../colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserProfileSection } from '../components/UserProfileSection';
-import { getUserInfo } from '../utils/partnersDB';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Login from './Login';
 
 export default function ProfilePage() {
-  const { setIsSignedIn } = useContext(Context);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
+  const { setIsSignedIn, isSignedIn } = useContext(Context);
   const navigation = useNavigation();
 
   useEffect(() => {
     const getUser = async () => {
-      const { data, error } = await getUserInfo(
-        '79c99535-2e01-4266-9c69-03d3bc6e2bce'
-      );
-      if (error) {
-        console.error(error);
-      } else {
-        setUser(data[0]);
-      }
+      const user = await AsyncStorage.getItem('user');
+      setUser(JSON.parse(user));
     };
     getUser();
-  }, []);
+  }, [user]);
+
+  const handleSignOut = async () => {
+    await AsyncStorage.removeItem('user');
+    setIsSignedIn(false);
+  };
 
   if (!user) {
     return <Text>Cargando...</Text>;
+  }
+
+  if (!isSignedIn) {
+    return <Login />;
   }
 
   return (
@@ -41,7 +45,7 @@ export default function ProfilePage() {
           >
             <Text style={styles.btnText}>Editar </Text>
           </Pressable>
-          <Pressable onPress={() => setIsSignedIn(false)}>
+          <Pressable onPress={handleSignOut}>
             <Text style={{ paddingVertical: 12, textAlign: 'center' }}>
               Cerrar sesión
             </Text>

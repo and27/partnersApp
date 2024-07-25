@@ -6,25 +6,14 @@ import { COLORS } from '../colors';
 const img = require('../../assets/avatar4.jpg');
 
 export default function UserProfileCard({ user }) {
-  const [userEmail, setUserEmail] = useState<string>();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const user = await AsyncStorage.getItem('user');
-      if (user) setUserEmail(JSON.parse(user).name);
-    };
-
-    getUser();
-  }, []);
-
   return (
     <View>
       <View style={styles.listItem}>
         <Image source={img} style={styles.userImg} />
         <View style={styles.userInfo}>
-          <Text style={styles.title}>{user.name}</Text>
-          <Text style={styles.listItemSubtitle}>{userEmail}</Text>
-          <Text style={styles.listItemSubtitle}>{user.expertise}</Text>
+          <Text style={styles.title}>{user?.name}</Text>
+          <Text style={styles.listItemSubtitle}>{user?.ocupation}</Text>
+          <Text style={styles.listItemSubtitle}>{user?.city}</Text>
         </View>
       </View>
     </View>
