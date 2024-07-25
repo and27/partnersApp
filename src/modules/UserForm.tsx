@@ -10,7 +10,7 @@ import {
 import { COLORS } from '../colors';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import { updateProfile } from '../utils/partnersDB';
+import { upsertUserInfo } from '../utils/partnersDB';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -22,7 +22,7 @@ export default function UserInfoForm() {
   } = useForm();
 
   const onSubmit = async userInfo => {
-    const { data, error } = await updateProfile(userInfo);
+    const { data, error } = await upsertUserInfo(userInfo);
     if (error) {
       console.log(error);
     } else {

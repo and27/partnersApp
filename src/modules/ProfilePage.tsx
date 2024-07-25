@@ -1,36 +1,39 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../../App';
 import { COLORS } from '../colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserProfileSection } from '../components/UserProfileSection';
+import { getUserInfo } from '../utils/partnersDB';
 
 export default function ProfilePage() {
   const { setIsSignedIn } = useContext(Context);
+  const [user, setUser] = useState();
   const navigation = useNavigation();
 
-  const user = {
-    id: '0',
-    name: 'Erick Cadena ',
-    expertise: 'Biólogo',
-    city: 'Quito'
-  };
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await getUserInfo(
+        '79c99535-2e01-4266-9c69-03d3bc6e2bce'
+      );
+      if (error) {
+        console.error(error);
+      } else {
+        setUser(data[0]);
+      }
+    };
+    getUser();
+  }, []);
 
-  const userInfo = {
-    about:
-      'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
-    experience: [
-      'Investigador en microbiología',
-      'Profesor de biología',
-      'Consultor en salud ambiental'
-    ]
-  };
+  if (!user) {
+    return <Text>Cargando...</Text>;
+  }
 
   return (
     <>
       <ScrollView contentContainerStyle={styles.container2}>
-        <UserProfileSection user={user} userInfo={userInfo} />
+        <UserProfileSection user={user} />
         <View>
           <Pressable
             style={styles.btn}

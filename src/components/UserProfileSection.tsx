@@ -4,13 +4,13 @@ import Social from './Social';
 import { ExperienceList } from './ExperienceList';
 import { COLORS } from '../colors';
 
-export const UserProfileSection = ({ user, userInfo }) => (
+export const UserProfileSection = ({ user }) => (
   <>
     <UserProfileCard user={user} />
     <View style={styles.containerInner}>
       <View style={styles.goal}>
         <Text style={styles.title}>Sobre mi</Text>
-        <Text style={styles.description}>{userInfo.about}</Text>
+        <Text style={styles.description}>{user.bio}</Text>
       </View>
       <Social />
       <View style={styles.section}>

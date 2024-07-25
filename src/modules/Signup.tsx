@@ -14,6 +14,7 @@ import { COLORS } from '../colors';
 import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { signupWithPassword } from '../utils/supabase';
 import { Context } from '../../App';
+import { upsertUserInfo } from '../utils/partnersDB';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
@@ -56,10 +57,16 @@ export default function Signup() {
         { text: 'OK' }
       ]);
       return setIsSignedIn(false);
+    } else {
+      setIsSignedIn(true);
+      upsertUserInfo({
+        uid: '79c99535-2e01-4266-9c69-03d3bc6e2bce',
+        name: 'juanito',
+        city: 'Quito',
+        ocupation: 'designer'
+      });
+      navigation.navigate('UserForm' as never);
     }
-
-    setIsSignedIn(true);
-    navigation.navigate('UserForm' as never);
   };
 
   return (

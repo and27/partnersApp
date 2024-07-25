@@ -5,9 +5,17 @@ const savePost = async post => {
   return { data, error };
 };
 
-const updateProfile = async userInfo => {
+const upsertUserInfo = async userInfo => {
   const { data, error } = await supabase.from('user').upsert(userInfo);
   return { data, error };
 };
 
-export { savePost, updateProfile };
+const getUserInfo = async userId => {
+  const { data, error } = await supabase
+    .from('user')
+    .select('*')
+    .eq('uid', userId);
+  return { data, error };
+};
+
+export { savePost, upsertUserInfo, getUserInfo };
