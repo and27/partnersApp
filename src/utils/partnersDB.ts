@@ -1,7 +1,12 @@
 import { supabase } from './supabase';
 
+const getPosts = async () => {
+  const { data, error } = await supabase.from('post').select('*');
+  return { data, error };
+};
+
 const savePost = async post => {
-  const { data, error } = await supabase.from('posts').insert(post);
+  const { data, error } = await supabase.from('post').insert(post);
   return { data, error };
 };
 
@@ -26,4 +31,10 @@ const getSuggestedConnections = async userId => {
   return { data, error };
 };
 
-export { savePost, upsertUserInfo, getUserInfo, getSuggestedConnections };
+export {
+  getPosts,
+  savePost,
+  upsertUserInfo,
+  getUserInfo,
+  getSuggestedConnections
+};

@@ -1,56 +1,44 @@
-import { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Pressable
-} from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { COLORS } from '../colors';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
-const photoUser1 = require('../../assets/avatar5.jpg');
-
-const ciencia1 = require('../../assets/ciencia1.png');
-const ciencia2 = require('../../assets/ciencia2.png');
-const partners = require('../../assets/logo.png');
-
-const items = [
-  {
-    title:
-      'CEDIA se complace en anunciar su próximo congreso sobre emprendimiento, donde se reunirán destacados expertos y emprendedores de todo el mundo.',
-    name: 'Partners',
-    position: 'Administrador',
-    img: ciencia1,
-    userImg: partners,
-    category: 'Concursos'
-  },
-  {
-    title:
-      'DEO se enorgullece de presentar el evento internacional de emprendimiento más destacado del año.',
-    name: 'Partners',
-    position: 'Administrador',
-    img: ciencia2,
-    userImg: partners,
-    category: 'Concursos'
-  },
-  {
-    title:
-      'Busco equipo para participar en la competencia de robótica de la Universidad de Cuenca. Si estás interesado, ¡contáctame!',
-    name: 'Erick Cadena',
-    position: 'Biólogo',
-    img: ciencia1,
-    userImg: photoUser1,
-    category: 'Talento'
-  }
-];
+import { getPosts, getUserInfo } from '../utils/partnersDB';
+import { Ionicons } from '@expo/vector-icons';
 
 const filters = ['Todos', 'Concursos', 'Talento'];
 
 export default function HomeNews() {
   const [filter, setFilter] = useState<string>('Todos');
+  const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data, error } = await getPosts();
+      if (error) {
+        console.error('Error fetching posts:', error);
+        return null;
+      }
+      const posts = await Promise.all(
+        data.map(async post => {
+          const { data: userData, error: userError } = await getUserInfo(
+            post.user_id
+          );
+          if (userError) {
+            console.error('Error fetching user info:', userError);
+            return null;
+          }
+          return {
+            ...post,
+            user: userData[0]
+          };
+        })
+      );
+      setPosts(posts);
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -81,32 +69,31 @@ export default function HomeNews() {
           })}
         </View>
 
-        {items
-          .filter(item => filter === 'Todos' || item.category === filter)
-          .map((item, index) => (
+        {posts
+          .filter(post => filter === 'Todos' || post.category === filter)
+          .map((post, index) => (
             <View style={styles.card} key={index}>
               <Pressable
                 style={styles.heading}
                 onPress={() => navigation.navigate('PublicProfile' as never)}
               >
-                <Image source={item.userImg} style={styles.userImg} />
+                <Ionicons name="person-circle" size={50} color={COLORS.green} />
                 <View>
-                  <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.position}>{item.position}</Text>
+                  <Text style={styles.title}>{post.user.name}</Text>
+                  <Text style={styles.position}>{post.user.ocupation}</Text>
                 </View>
               </Pressable>
               <Pressable
                 onPress={() =>
                   navigation.navigate('PostPage', {
-                    title: item.title,
-                    img: item.img
+                    title: post.title
                   })
                 }
               >
                 <Text style={styles.position} numberOfLines={2}>
-                  {item.title}
+                  {post.description}
                 </Text>
-                <Image style={styles.cardImg} source={item.img} />
+                {/* <Image style={styles.cardImg} source={post.user.img} />  */}
               </Pressable>
             </View>
           ))}

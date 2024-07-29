@@ -14,7 +14,6 @@ import { COLORS } from '../colors';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../utils/supabase';
 import Button from '../components/Button';
-const logo = require('../../assets/logo.png');
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -90,7 +89,7 @@ export default function PostForm() {
     if (error) {
       console.error('Error inserting post:', error);
     } else {
-      console.log('Post publicado');
+      navigation.navigate('Inicio' as never);
     }
   };
 
@@ -176,7 +175,7 @@ export default function PostForm() {
       <Button onPress={handleSubmit(onSubmit)}>Publicar</Button>
       <Pressable
         style={{ paddingVertical: 16 }}
-        onPress={() => navigation.navigate('Perfil' as never)}
+        onPress={() => navigation.navigate('Inicio' as never)}
       >
         <Text>Cancelar</Text>
       </Pressable>
