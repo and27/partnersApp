@@ -1,6 +1,11 @@
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../colors';
+import {
+  FieldValues,
+  SubmitErrorHandler,
+  SubmitHandler
+} from 'react-hook-form';
 
 interface ButtonProps {
   onPress: () => void;
