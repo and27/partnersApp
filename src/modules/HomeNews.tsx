@@ -1,17 +1,43 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Image
+} from 'react-native';
 import { COLORS } from '../colors';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
-import { getPosts, getUserInfo } from '../utils/partnersDB';
+import { downloadPostImage, getPosts, getUserInfo } from '../utils/partnersDB';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList } from './Stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const filters = ['Todos', 'Concursos', 'Talento'];
+type PostNavigationProp = StackNavigationProp<RootStackParamList, 'PostPage'>;
 
 export default function HomeNews() {
   const [filter, setFilter] = useState<string>('Todos');
   const [posts, setPosts] = useState([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation<PostNavigationProp>();
+
+  function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = error => {
+        reject(error);
+      };
+
+      fileReader.readAsDataURL(file);
+    });
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -27,7 +53,18 @@ export default function HomeNews() {
           );
           if (userError) {
             console.error('Error fetching user info:', userError);
-            return null;
+          }
+          if (post.image_url) {
+            const { data, error } = await downloadPostImage(post.image_url);
+            if (error) {
+              console.error('Error downloading image:', error);
+            }
+            try {
+              const imgUrl = await readFileAsDataURL(data);
+              post.img = imgUrl;
+            } catch (err) {
+              console.error('Error reading file:', err);
+            }
           }
           return {
             ...post,
@@ -79,21 +116,25 @@ export default function HomeNews() {
               >
                 <Ionicons name="person-circle" size={50} color={COLORS.green} />
                 <View>
-                  <Text style={styles.title}>{post.user.name}</Text>
-                  <Text style={styles.position}>{post.user.ocupation}</Text>
+                  <Text style={styles.title}>{post?.user.name}</Text>
+                  <Text style={styles.position}>{post?.user.ocupation}</Text>
                 </View>
               </Pressable>
               <Pressable
                 onPress={() =>
                   navigation.navigate('PostPage', {
-                    title: post.title
+                    title: post.title,
+                    description: post.description,
+                    img: post.img
                   })
                 }
               >
                 <Text style={styles.position} numberOfLines={2}>
-                  {post.description}
+                  {post?.description}
                 </Text>
-                {/* <Image style={styles.cardImg} source={post.user.img} />  */}
+                {post?.img && (
+                  <Image source={{ uri: post.img }} style={styles.cardImg} />
+                )}
               </Pressable>
             </View>
           ))}

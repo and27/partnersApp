@@ -65,11 +65,7 @@ export default function PostForm() {
       return null;
     }
 
-    const { data: urlData } = supabase.storage
-      .from('images')
-      .getPublicUrl(fileName);
-
-    return urlData;
+    return fileName;
   };
 
   const onSubmit = async data => {

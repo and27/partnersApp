@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import ProfilePage from './ProfilePage';
 import PublicProfile from './PublicProfilePage';
 import Login from './Login';
@@ -8,7 +8,18 @@ import UserInfoForm from './UserForm';
 import PostForm from './PostForm';
 import { PostPage } from './PostPage';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Inicio: undefined;
+  PostForm: undefined;
+  Perfil: undefined;
+  PublicProfile: undefined;
+  Ingresa: undefined;
+  Registro: undefined;
+  UserForm: undefined;
+  PostPage: { title: string; description: string; img: string };
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 function MyStack() {
   return (

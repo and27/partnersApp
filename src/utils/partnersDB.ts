@@ -10,6 +10,13 @@ const savePost = async post => {
   return { data, error };
 };
 
+const downloadPostImage = async imageUrl => {
+  const { data, error } = await supabase.storage
+    .from('images')
+    .download(imageUrl);
+  return { data, error };
+};
+
 const upsertUserInfo = async userInfo => {
   const { data, error } = await supabase.from('user').upsert(userInfo);
   return { data, error };
@@ -36,5 +43,6 @@ export {
   savePost,
   upsertUserInfo,
   getUserInfo,
-  getSuggestedConnections
+  getSuggestedConnections,
+  downloadPostImage
 };

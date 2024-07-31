@@ -1,11 +1,12 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 export const PostPage = ({ route }) => {
-  const { title, img } = route.params;
+  const { title, description, img } = route.params;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Image source={img} style={styles.img} />
+      <Text>{description}</Text>
+      {img && <Image source={{ uri: img }} style={styles.img} />}
     </View>
   );
 };
