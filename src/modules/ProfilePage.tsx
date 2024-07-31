@@ -10,8 +10,8 @@ import Login from './Login';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
-  const { setIsSignedIn, isSignedIn } = useContext(Context);
   const navigation = useNavigation();
+  const { setIsSignedIn, isSignedIn } = useContext(Context);
 
   useEffect(() => {
     const getUser = async () => {
@@ -19,19 +19,19 @@ export default function ProfilePage() {
       setUser(JSON.parse(user));
     };
     getUser();
-  }, [user]);
+  }, [isSignedIn]);
 
   const handleSignOut = async () => {
     await AsyncStorage.removeItem('user');
     setIsSignedIn(false);
   };
 
-  if (!user) {
-    return <Text>Cargando...</Text>;
-  }
-
   if (!isSignedIn) {
     return <Login />;
+  }
+
+  if (!user) {
+    return <Text>Loading...</Text>;
   }
 
   return (

@@ -3,29 +3,12 @@ import { View, StyleSheet } from 'react-native';
 import { COLORS } from '../colors';
 import { UserProfileSection } from '../components/UserProfileSection';
 
-const user = {
-  id: '0',
-  name: 'Erick Cadena ',
-  expertise: 'Biólogo',
-  city: 'Quito'
-};
-
-const userInfo = {
-  about:
-    'Soy un biólogo apasionado y especializado en microbiología, dedicado a explorar el fascinante mundo de los microorganismos.',
-  experience: [
-    'Investigador en microbiología',
-    'Profesor de biología',
-    'Consultor en salud ambiental'
-  ]
-};
-
 export default function PublicProfile() {
   const user = { id: '0', name: 'John', expertise: 'Web dev' };
   return (
     <>
       <View style={styles.container2}>
-        <UserProfileSection user={user} userInfo={userInfo} />
+        <UserProfileSection user={user} />
       </View>
     </>
   );

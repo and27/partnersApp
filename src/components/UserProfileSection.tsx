@@ -11,7 +11,7 @@ export const UserProfileSection = ({ user }) => {
       <View style={styles.containerInner}>
         <View style={styles.goal}>
           <Text style={styles.title}>Sobre mi</Text>
-          <Text style={styles.description}>{user.bio}</Text>
+          <Text style={styles.description}>{user?.bio}</Text>
         </View>
         <Social />
         <View style={styles.section}>

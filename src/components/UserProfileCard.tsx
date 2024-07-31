@@ -1,6 +1,5 @@
-import { Image, Text, View, StyleSheet, Button } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../colors';
 
 const img = require('../../assets/avatar4.jpg');
@@ -9,7 +8,7 @@ export default function UserProfileCard({ user }) {
   return (
     <View>
       <View style={styles.listItem}>
-        <Image source={img} style={styles.userImg} />
+        <Ionicons name="person-circle" size={48} color={COLORS.green} />
         <View style={styles.userInfo}>
           <Text style={styles.title}>{user?.name}</Text>
           <Text style={styles.listItemSubtitle}>{user?.ocupation}</Text>
