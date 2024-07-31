@@ -15,6 +15,7 @@ import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { signupWithPassword } from '../utils/supabase';
 import { Context } from '../../App';
 import { upsertUserInfo } from '../utils/partnersDB';
+import Button from '../components/Button';
 
 const windowWidth = Dimensions.get('window').width;
 const img = require('../../assets/logo.png');
@@ -58,14 +59,13 @@ export default function Signup() {
       ]);
       return setIsSignedIn(false);
     } else {
-      setIsSignedIn(true);
+      navigation.navigate('Ingresa' as never);
       upsertUserInfo({
-        uid: '79c99535-2e01-4266-9c69-03d3bc6e2bce',
-        name: 'juanito',
-        city: 'Quito',
+        uid: data.user.id,
+        name: data.user.email,
+        city: 'CDMX',
         ocupation: 'designer'
       });
-      navigation.navigate('UserForm' as never);
     }
   };
 
@@ -169,8 +169,20 @@ export default function Signup() {
             }
           }}
         />
-        <Pressable style={styles.btn} onPress={handleSubmit(onSubmit, onError)}>
-          <Text style={styles.btnText}>Registrarme</Text>
+        <Button
+          onPress={handleSubmit(onSubmit, onError)}
+          textStyles={styles.btnText}
+        >
+          Registrarme
+        </Button>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Ingresa' as never);
+          }}
+        >
+          <Text style={[styles.btnSecondary, { marginTop: 8 }]}>
+            Ya tengo una cuenta
+          </Text>
         </Pressable>
       </View>
     </>
@@ -194,6 +206,7 @@ const styles = StyleSheet.create({
     borderColor: '#bbb',
     borderWidth: 1,
     marginTop: 8,
+    marginBottom: 8,
     padding: 5,
     borderRadius: 8,
     width: windowWidth - 40,
@@ -222,11 +235,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   btnText: {
-    color: COLORS.primaryWhite
+    fontSize: 16
   },
   errorText: {
     color: COLORS.error,
     fontSize: 12,
     marginTop: 4
+  },
+  btnSecondary: {
+    color: COLORS.primaryBlack,
+    fontSize: 16,
+    padding: 10
   }
 });
