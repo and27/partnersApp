@@ -10,14 +10,16 @@ const users = [
     name: 'John',
     expertise: 'Diseñador web',
     city: 'Ibarra',
-    img: imagePerson3
+    img: imagePerson3,
+    message: 'Hola, soy John y me ...'
   },
   {
     id: '2',
     name: 'Mari',
     expertise: 'Ciencia de datos',
     city: 'Quito',
-    img: imagePerson5
+    img: imagePerson5,
+    message: 'Hola, podrías ayudarme con ...'
   }
   // {
   //   id: '3',

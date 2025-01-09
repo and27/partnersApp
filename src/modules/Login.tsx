@@ -47,10 +47,11 @@ export default function Login() {
   };
 
   const handlePasswordLogin = async (userCredentials: FormValues) => {
-    const { data, error } = await login({
-      email: userCredentials?.email,
-      password: userCredentials?.password
-    });
+    // const { data, error } = await login({
+    //   email: userCredentials?.email,
+    //   password: userCredentials?.password
+    // });
+    const error = null;
 
     if (error) {
       Alert.alert('Error', error.message, [
@@ -64,13 +65,22 @@ export default function Login() {
       return setIsSignedIn(false);
     }
 
-    const userId = data?.session?.user?.id;
-    const { data: userInfo, error: userError } = await getUserInfo(userId);
-    if (error) {
-      console.error(error);
+    // const userId = data?.session?.user?.id;
+    // const { data: userInfo, error: userError } = await getUserInfo(userId);
+    const userInfo = [
+      {
+        name: 'Juan',
+        bio: 'Soy un emprendedor en busca de socios para mi startup',
+        city: 'CDMX',
+        ocupation: 'Desarrollador'
+      }
+    ];
+    const userError = null;
+    if (userError) {
+      console.error(userError);
     } else {
       const user = {
-        id: userId,
+        // id: userId,
         name: userInfo[0]?.name,
         bio: userInfo[0]?.bio,
         city: userInfo[0]?.city,

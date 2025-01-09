@@ -1,56 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { COLORS } from '../colors';
-import { getSuggestedConnections } from '../utils/partnersDB';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ConnectionCard from '../components/ConnectionCard';
 
 const { width, height } = Dimensions.get('window');
-const person1 = require('../../assets/person1.png');
-
-export default function SuggestedConnections() {
-  const [suggestedConnection, setSuggestedConnection] = useState({});
-  useEffect(() => {
-    const getConnections = async () => {
-      const user = await AsyncStorage.getItem('user');
-      const userId = JSON.parse(user).id;
-      const { data, error } = await getSuggestedConnections(userId);
-      if (error) {
-        console.error(error);
-      } else {
-        setSuggestedConnection(data[0]);
-      }
-    };
-
-    getConnections();
-  }, []);
-
-  return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.innerContainer}>
-          {suggestedConnection ? (
-            <ConnectionCard user={suggestedConnection} />
-          ) : (
-            <Text>No hay sugerencias de conexión.</Text>
-          )}
-        </View>
-      </SafeAreaView>
-    </>
-  );
-}
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: COLORS.primaryWhite,
-    minHeight: '100%'
-  },
-  innerContainer: {
-    padding: 12,
-    display: 'flex',
-    gap: 16,
-    alignItems: 'center'
-  },
   card: {
     width: width * 0.9,
     borderRadius: 16,
@@ -63,12 +16,13 @@ const styles = StyleSheet.create({
     elevation: 6,
     position: 'relative',
     marginBottom: 56,
-    height: height * 0.73
+    height: height * 0.8 // Aumentamos un poco la altura para acomodar todo
   },
   imageContainer: {
     position: 'relative',
     borderRadius: 24,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: 16
   },
   userImg: {
     width: '100%',
@@ -103,43 +57,32 @@ const styles = StyleSheet.create({
     marginTop: 4
   },
   cardContent: {
-    padding: 16,
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    paddingHorizontal: 16
   },
   compatibility: {
-    fontSize: 14,
     color: COLORS.green,
     marginBottom: 8
   },
   quoteCard: {
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: '#eaeaea',
     borderRadius: 8,
-    padding: 12,
-    marginBottom: 16
+    padding: 12
   },
   quoteText: {
     fontSize: 14,
     fontStyle: 'italic',
-    color: COLORS.black,
-    textAlign: 'center'
+    color: COLORS.black
   },
   description: {
     color: COLORS.darkGray,
     fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 16
-  },
-  showMore: {
-    color: COLORS.blue,
-    fontSize: 14,
-    textAlign: 'center',
     marginBottom: 16
   },
   tagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginVertical: 8
+    justifyContent: 'center'
   },
   tag: {
     backgroundColor: COLORS.lightGray,
@@ -153,13 +96,13 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   actionButtons: {
-    bottom: 0,
+    position: 'absolute',
+    bottom: 48,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 16,
-    backgroundColor: COLORS.primaryWhite
+    paddingHorizontal: 48
   },
   actionBtn: {
     padding: 8,
@@ -173,11 +116,46 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  btnText: {
-    fontSize: 12,
-    color: COLORS.darkGray,
-    marginTop: 4,
-    textAlign: 'center'
   }
 });
+
+export const getCarouselItems = user => [
+  {
+    content: (
+      <View style={styles.cardContent}>
+        <Text style={styles.description}>{user.bio}</Text>
+      </View>
+    )
+  },
+  {
+    content: (
+      <View style={styles.cardContent}>
+        {/* <Text style={styles.compatibility}>{user.compatibility}</Text> */}
+        <View style={styles.quoteCard}>
+          <Text style={styles.quoteText}>{user.valueProposition}</Text>
+        </View>
+      </View>
+    )
+  },
+  {
+    content: (
+      <View style={styles.cardContent}>
+        <View style={styles.tagsContainer}>
+          {user.tags.map((tag, index) => (
+            <View key={index} style={styles.tag}>
+              <Text style={styles.tagText}>#{tag}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    )
+  },
+  {
+    content: (
+      <View style={styles.cardContent}>
+        <Text style={styles.description}>{user.name} está buscando:</Text>
+        <Text style={styles.description}>{user.lookingFor}</Text>
+      </View>
+    )
+  }
+];

@@ -8,19 +8,19 @@ export default function Social() {
       <Ionicons
         name="logo-linkedin"
         size={18}
-        color={COLORS.primaryBlue}
+        color={COLORS.primaryWhite}
         style={styles.item}
       />
       <Ionicons
         name="logo-instagram"
         size={18}
-        color={COLORS.primaryBlue}
+        color={COLORS.primaryWhite}
         style={styles.item}
       />
       <Ionicons
         name="logo-whatsapp"
         size={18}
-        color={COLORS.primaryBlue}
+        color={COLORS.primaryWhite}
         style={styles.item}
       />
     </View>
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   item: {
     padding: 6,
     borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    borderRadius: 8
+    borderColor: COLORS.primaryBlue,
+    borderRadius: 30,
+    backgroundColor: COLORS.primaryBlue
   }
 });

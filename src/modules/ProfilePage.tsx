@@ -35,24 +35,22 @@ export default function ProfilePage() {
   }
 
   return (
-    <>
-      <ScrollView contentContainerStyle={styles.container2}>
-        <UserProfileSection user={user} />
-        <View>
-          <Pressable
-            style={styles.btn}
-            onPress={() => navigation.navigate('UserForm' as never)}
-          >
-            <Text style={styles.btnText}>Editar </Text>
-          </Pressable>
-          <Pressable onPress={handleSignOut}>
-            <Text style={{ paddingVertical: 12, textAlign: 'center' }}>
-              Cerrar sesión
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </>
+    <ScrollView contentContainerStyle={styles.container2}>
+      <UserProfileSection user={user} />
+      <View>
+        <Pressable
+          style={styles.btn}
+          onPress={() => navigation.navigate('UserForm' as never)}
+        >
+          <Text style={styles.btnText}>Editar </Text>
+        </Pressable>
+        <Pressable onPress={handleSignOut}>
+          <Text style={{ paddingVertical: 12, textAlign: 'center' }}>
+            Cerrar sesión
+          </Text>
+        </Pressable>
+      </View>
+    </ScrollView>
   );
 }
 

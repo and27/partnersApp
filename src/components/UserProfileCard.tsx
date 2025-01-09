@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
 
   title: {
     color: COLORS.green,
-    fontWeight: '500'
+    fontWeight: '500',
+    fontSize: 16
   },
 
   listItemSubtitle: {

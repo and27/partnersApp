@@ -9,11 +9,11 @@ export const UserProfileSection = ({ user }) => {
     <>
       <UserProfileCard user={user} />
       <View style={styles.containerInner}>
+        <Social />
         <View style={styles.goal}>
           <Text style={styles.title}>Sobre mi</Text>
           <Text style={styles.description}>{user?.bio}</Text>
         </View>
-        <Social />
         <View style={styles.section}>
           <Text style={styles.title}>Experiencia </Text>
           <ExperienceList />
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     marginTop: 24
   },
   title: {
-    fontSize: 12,
-    color: COLORS.primaryBlue,
+    fontSize: 14,
+    color: COLORS.primaryBlack,
     fontWeight: '600',
     marginBottom: 8
   },

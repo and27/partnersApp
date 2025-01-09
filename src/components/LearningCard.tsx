@@ -1,20 +1,22 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
 import { COLORS } from '../colors';
 
-const LearningCard = ({ title, description, step, isEven }) => {
-  const navigation = useNavigation();
+const LearningCard = ({ title, position, description, img }) => {
   return (
-    <Pressable
-      style={{ ...styles.card, alignSelf: isEven ? 'flex-start' : 'flex-end' }}
-    >
+    <Pressable style={styles.card}>
       <View style={styles.cardInner}>
         <View style={styles.content}>
-          <View style={styles.step}>
-            <Text style={styles.stepNumber}>{step}</Text>
+          <View style={styles.heading}>
+            <Image source={img} style={styles.userImg} />
+            <View>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.position}>{position}</Text>
+            </View>
           </View>
-          <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
+          <Pressable style={styles.btn}>
+            <Text style={styles.btnText}>Seguir</Text>
+          </Pressable>
         </View>
       </View>
     </Pressable>
@@ -25,11 +27,9 @@ export default LearningCard;
 
 const styles = StyleSheet.create({
   card: {
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: '#555',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.green,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -53,24 +53,38 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 4
   },
-  step: {
-    backgroundColor: '#555',
-    width: 30,
-    height: 30,
-    borderRadius: 100,
+  heading: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
   },
-  stepNumber: {
-    color: COLORS.primaryWhite
-  },
+  userImg: { width: 50, height: 50, borderRadius: 100 },
   title: {
-    fontWeight: '600',
+    fontWeight: '500',
+    color: COLORS.green,
     marginTop: 4
+  },
+  position: {
+    marginTop: 2,
+    fontSize: 12,
+    color: '#777'
   },
   description: {
     color: '#777',
-    maxWidth: 200
+    maxWidth: 200,
+    marginTop: 16,
+    fontSize: 12
+  },
+  btn: {
+    backgroundColor: COLORS.green,
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 16,
+    marginTop: 4
+  },
+  btnText: {
+    color: COLORS.primaryWhite,
+    fontSize: 12
   }
 });

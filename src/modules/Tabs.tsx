@@ -33,7 +33,7 @@ function MyTabs() {
         }
       }}
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MainStack"
         component={MyStack}
         options={{
@@ -48,7 +48,7 @@ function MyTabs() {
             />
           )
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Connections"
         component={SuggestedConnections}
@@ -58,8 +58,8 @@ function MyTabs() {
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={focused ? 'search' : 'search-outline'}
-              size={22}
+              name={focused ? 'people' : 'people-outline'}
+              size={24}
               color={focused ? COLORS.green : '#888'}
             />
           )
@@ -93,7 +93,7 @@ function MyTabs() {
           tabBarIcon: ({ focused }) => {
             return (
               <Ionicons
-                name={focused ? 'person' : 'person-outline'}
+                name={focused ? 'settings' : 'settings-outline'}
                 size={22}
                 color={focused ? COLORS.green : '#888'}
               />
