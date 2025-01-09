@@ -1,36 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import { COLORS } from '../constants/colors';
-import { getSuggestedConnections } from '../utils/partnersDB';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConnectionCard from '../components/ConnectionCard';
+import { profiles } from '../data/profiles';
+import { getCarouselItems } from '../components/ConnectionCarrouselItem';
 
 const { width, height } = Dimensions.get('window');
-const person1 = require('../../assets/person1.png');
 
 export default function SuggestedConnections() {
   const [suggestedConnection, setSuggestedConnection] = useState({});
+  const [connectionIndex, setConnectionIndex] = useState(0);
+  const [carouselItems, setCarouselItems] = useState([]);
+
+  const handleNextProfile = () => {
+    const nextIndex = (connectionIndex + 1) % profiles.length;
+    setConnectionIndex(nextIndex);
+    setSuggestedConnection(profiles[nextIndex]);
+  };
+
   useEffect(() => {
     const getConnections = async () => {
       const user = await AsyncStorage.getItem('user');
       const userId = JSON.parse(user).id;
-      const { data, error } = await getSuggestedConnections(userId);
-      if (error) {
-        console.error(error);
-      } else {
-        setSuggestedConnection(data[0]);
-      }
+      const currentConnection = profiles[connectionIndex];
+      setSuggestedConnection(currentConnection);
+      const connectionInfo = getCarouselItems(currentConnection);
+      setCarouselItems(connectionInfo);
+
+      // const { data, error } = await getSuggestedConnections(userId);
+      // if (error) {
+      //   console.error(error);
+      // } else {
+      //   setSuggestedConnection(data[0]);
+      // }
     };
 
     getConnections();
   }, []);
+
+  const match = () => {
+    console.log('Match!');
+    console.log(suggestedConnection);
+  };
 
   return (
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.innerContainer}>
           {suggestedConnection ? (
-            <ConnectionCard user={suggestedConnection} />
+            <ConnectionCard
+              suggestedConnection={suggestedConnection}
+              handleNextProfile={handleNextProfile}
+              carouselItems={carouselItems}
+              match={match}
+            />
           ) : (
             <Text>No hay sugerencias de conexión.</Text>
           )}

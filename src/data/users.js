@@ -1,8 +1,8 @@
-const imagePerson3 = require('../assets/avatar4.jpg');
-const imagePerson2 = require('../assets/avatar5.jpg');
-const imagePerson1 = require('../assets/avatar6.jpg');
-const imagePerson5 = require('../assets/avatar11.png');
-const imagePerson7 = require('../assets/avatar12.png');
+const imagePerson3 = require('../../assets/avatar4.jpg');
+const imagePerson2 = require('../../assets/avatar5.jpg');
+const imagePerson1 = require('../../assets/avatar6.jpg');
+const imagePerson5 = require('../../assets/avatar11.png');
+const imagePerson7 = require('../../assets/avatar12.png');
 
 const users = [
   {

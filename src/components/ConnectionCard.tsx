@@ -1,46 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { ScrollView } from 'react-native-gesture-handler';
 import { COLORS } from '../constants/colors';
 import ProgressDots from './ProgressDots';
-import { profiles } from '../data/profiles';
-import { ScrollView } from 'react-native-gesture-handler';
-import { getCarouselItems } from './ConnectionCarrouselItem';
 import ConnectionCardActions from './ConnectionCardActions';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const entrepreneurImg = require('../../assets/entrepreneur.webp');
 
-const ConnectionCard = () => {
-  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
-  const [carouselItems, setCarouselItems] = useState([]);
+interface ConnectionCardProps {
+  suggestedConnection: any;
+  handleNextProfile: () => void;
+  carouselItems: any;
+  match: () => void;
+}
+const ConnectionCard = ({
+  suggestedConnection,
+  handleNextProfile,
+  carouselItems,
+  match
+}: ConnectionCardProps) => {
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const user = profiles[currentProfileIndex];
-
-  useEffect(() => {
-    const items = getCarouselItems(user);
-    setCarouselItems(items);
-  }, [currentProfileIndex]);
-
-  const handleNextProfile = () => {
-    const nextIndex = (currentProfileIndex + 1) % profiles.length;
-    setCurrentProfileIndex(nextIndex);
-  };
+  const user = suggestedConnection;
 
   return (
     <View>
       <ScrollView style={styles.card}>
         <View style={styles.imageContainer}>
-          <Image source={entrepreneurImg} style={styles.userImg} />
+          <Image source={{ uri: user.image }} style={styles.userImg} />
           <View style={styles.gradientOverlay} />
-          <ConnectionCardActions handleNextProfile={handleNextProfile} />
+          <ConnectionCardActions
+            handleNextProfile={handleNextProfile}
+            match={match}
+          />
 
           <View style={styles.textOverlay}>
             <Text style={styles.name}>{user.name}</Text>
