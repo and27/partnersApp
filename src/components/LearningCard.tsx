@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet, Image } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 const LearningCard = ({ title, position, description, img }) => {
   return (

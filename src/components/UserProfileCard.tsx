@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 const img = require('../../assets/avatar4.jpg');
 

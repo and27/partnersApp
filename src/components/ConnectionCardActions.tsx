@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 const { width, height } = Dimensions.get('window');
 

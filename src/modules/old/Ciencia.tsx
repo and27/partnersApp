@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import { COLORS } from '../../colors';
+import { COLORS } from '../../constants/colors';
 const photoUser1 = require('../../assets/avatar5.jpg');
 const photoUser2 = require('../../assets/avatar6.jpg');
 

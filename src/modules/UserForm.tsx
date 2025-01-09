@@ -7,7 +7,7 @@ import {
   Dimensions,
   Pressable
 } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { upsertUserInfo } from '../utils/partnersDB';

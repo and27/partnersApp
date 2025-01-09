@@ -6,7 +6,7 @@ import {
   Pressable,
   Linking
 } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 export default function ChatItem({ item }) {
   const openWhatsApp = (number, text) => {

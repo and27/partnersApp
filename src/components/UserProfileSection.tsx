@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import UserProfileCard from './UserProfileCard';
 import Social from './Social';
 import { ExperienceList } from './ExperienceList';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 export const UserProfileSection = ({ user }) => {
   return (

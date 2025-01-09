@@ -7,7 +7,7 @@ import {
   Pressable,
   Image
 } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 import { downloadPostImage, getPosts, getUserInfo } from '../utils/partnersDB';

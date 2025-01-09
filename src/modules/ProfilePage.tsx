@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Context } from '../../App';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserProfileSection } from '../components/UserProfileSection';
 import AsyncStorage from '@react-native-async-storage/async-storage';

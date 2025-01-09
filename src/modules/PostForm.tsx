@@ -10,7 +10,7 @@ import {
   Image
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../utils/supabase';
 import Button from '../components/Button';

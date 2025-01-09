@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LearningCard from '../../components/LearningCard';
-import { COLORS } from '../../colors';
+import { COLORS } from '../../constants/colors';
 
 const photoUser3 = require('../../assets/avatar12.png');
 const photoUser2 = require('../../assets/avatar4.jpg');

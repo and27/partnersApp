@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { getSuggestedConnections } from '../utils/partnersDB';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConnectionCard from '../components/ConnectionCard';

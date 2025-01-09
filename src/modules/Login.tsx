@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { Context } from '../../App';
 import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { login } from '../utils/supabase';

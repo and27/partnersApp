@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View, FlatList } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 export const ExperienceList = () => {
   const data = [

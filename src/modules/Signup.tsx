@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { Controller, SubmitErrorHandler, useForm } from 'react-hook-form';
 import { signupWithPassword } from '../utils/supabase';
 import { Context } from '../../App';

@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import ProgressDots from './ProgressDots';
 import { profiles } from '../data/profiles';
 import { ScrollView } from 'react-native-gesture-handler';

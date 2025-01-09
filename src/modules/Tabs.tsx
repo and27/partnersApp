@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SuggestedConnections from './SuggestedConnections';
 import MyStack, { LoginStack, ProfileStack } from './Stack';
 import Chat from './Chat';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 

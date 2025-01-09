@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 export default function Social() {
   return (

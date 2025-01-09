@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 
 const ProgressDots = ({ currentStep }) => {
   return (

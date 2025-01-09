@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import users from '../users';
+import users from '../data/users';
 import ChatItem from '../components/ChatItem';
-import { COLORS } from '../colors';
+import { COLORS } from '../constants/colors';
 import { Context } from '../../App';
 import Login from './Login';
 const logo = require('../../assets/logo.png');
