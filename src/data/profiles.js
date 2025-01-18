@@ -1,5 +1,6 @@
 export const profiles = [
   {
+    id: 1,
     name: 'Juan Pérez',
     city: 'Ciudad de México',
     ocupation: 'Desarrollador Full Stack',
@@ -18,6 +19,7 @@ export const profiles = [
     lookingFor: 'Startups que necesiten un desarrollador full stack.'
   },
   {
+    id: 2,
     name: 'María López',
     city: 'Buenos Aires',
     ocupation: 'Especialista en UX/UI',
@@ -31,6 +33,7 @@ export const profiles = [
       'Empresas que busquen mejorar la experiencia de usuario de sus productos digitales.'
   },
   {
+    id: 3,
     name: 'Carlos Sánchez',
     city: 'Santiago de Chile',
     ocupation: 'Consultor en Estrategia Digital',
@@ -43,6 +46,7 @@ export const profiles = [
     lookingFor: 'Empresas que necesiten asesoramiento en estrategia digital.'
   },
   {
+    id: 4,
     name: 'Ana García',
     city: 'Lima',
     ocupation: 'Gerente de Producto',
@@ -61,6 +65,7 @@ export const profiles = [
       'Empresas que busquen mejorar su proceso de desarrollo de productos.'
   },
   {
+    id: 5,
     name: 'Luis Rodríguez',
     city: 'Bogotá',
     ocupation: 'Especialista en Inteligencia Artificial',

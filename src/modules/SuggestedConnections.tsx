@@ -5,24 +5,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConnectionCard from '../components/ConnectionCard';
 import { profiles } from '../data/profiles';
 import { getCarouselItems } from '../components/ConnectionCarrouselItem';
+import useMatchStore from '../stores/useMatchStore';
 
 const { width, height } = Dimensions.get('window');
 
 export default function SuggestedConnections() {
-  const [suggestedConnection, setSuggestedConnection] = useState({});
-  const [connectionIndex, setConnectionIndex] = useState(0);
+  const [suggestedConnection, setSuggestedConnection] = useState(null);
+  const [connectionIndex, setConnectionIndex] = useState<number>(0);
   const [carouselItems, setCarouselItems] = useState([]);
+  const addMatch = useMatchStore(state => state.addMatch);
+
+  const match = () => {
+    addMatch(suggestedConnection);
+    handleNextProfile();
+  };
 
   const handleNextProfile = () => {
-    const nextIndex = (connectionIndex + 1) % profiles.length;
-    setConnectionIndex(nextIndex);
-    setSuggestedConnection(profiles[nextIndex]);
+    console.log(connectionIndex < profiles.length);
+    if (connectionIndex < profiles.length - 1) {
+      setConnectionIndex(connectionIndex);
+      setSuggestedConnection(profiles[connectionIndex]);
+    } else {
+      setSuggestedConnection(null);
+    }
   };
 
   useEffect(() => {
     const getConnections = async () => {
       const user = await AsyncStorage.getItem('user');
-      const userId = JSON.parse(user).id;
       const currentConnection = profiles[connectionIndex];
       setSuggestedConnection(currentConnection);
       const connectionInfo = getCarouselItems(currentConnection);
@@ -38,11 +48,6 @@ export default function SuggestedConnections() {
 
     getConnections();
   }, []);
-
-  const match = () => {
-    console.log('Match!');
-    console.log(suggestedConnection);
-  };
 
   return (
     <>
