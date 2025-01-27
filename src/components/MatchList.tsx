@@ -1,10 +1,12 @@
-import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import useMatchStore from '../stores/useMatchStore';
 
 const MatchList = () => {
   const matches = useMatchStore(state => state.matches);
 
+  if (!matches.length) {
+    return <Text>No matches</Text>;
+  }
   return (
     <View>
       <FlatList
