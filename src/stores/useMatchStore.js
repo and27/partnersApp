@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useMatchStore = create(
   persist(
@@ -13,7 +14,8 @@ const useMatchStore = create(
       clearMatches: () => set({ matches: [] })
     }),
     {
-      name: 'matches-storage'
+      name: 'matches-storage',
+      storage: createJSONStorage(() => AsyncStorage)
     }
   )
 );

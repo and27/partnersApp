@@ -1,84 +1,124 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  Button,
+  ActivityIndicator
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../constants/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConnectionCard from '../components/ConnectionCard';
-import { profiles } from '../data/profiles';
-import { getCarouselItems } from '../components/ConnectionCarrouselItem';
-import useMatchStore from '../stores/useMatchStore';
+import { useSuggestedConnections } from '../hooks/useSuggestedConnections';
+
+const NO_SUGGESTIONS_TEXT = 'No hay más sugerencias de conexión por ahora.';
+const GENERIC_ERROR_TEXT = 'Ocurrió un error al cargar las sugerencias.';
 
 const { width, height } = Dimensions.get('window');
 
 export default function SuggestedConnections() {
-  const [suggestedConnection, setSuggestedConnection] = useState(null);
-  const [connectionIndex, setConnectionIndex] = useState<number>(0);
-  const [carouselItems, setCarouselItems] = useState([]);
-  const addMatch = useMatchStore(state => state.addMatch);
+  const navigation = useNavigation();
+  const {
+    isLoading,
+    error,
+    suggestedConnection,
+    carouselItems,
+    handleNextProfile,
+    match
+  } = useSuggestedConnections();
 
-  const match = () => {
-    addMatch(suggestedConnection);
-    handleNextProfile();
-  };
-
-  const handleNextProfile = () => {
-    console.log(connectionIndex < profiles.length);
-    if (connectionIndex < profiles.length - 1) {
-      setConnectionIndex(connectionIndex);
-      setSuggestedConnection(profiles[connectionIndex]);
-    } else {
-      setSuggestedConnection(null);
-    }
-  };
-
-  useEffect(() => {
-    const getConnections = async () => {
-      const user = await AsyncStorage.getItem('user');
-      const currentConnection = profiles[connectionIndex];
-      setSuggestedConnection(currentConnection);
-      const connectionInfo = getCarouselItems(currentConnection);
-      setCarouselItems(connectionInfo);
-
-      // const { data, error } = await getSuggestedConnections(userId);
-      // if (error) {
-      //   console.error(error);
-      // } else {
-      //   setSuggestedConnection(data[0]);
-      // }
-    };
-
-    getConnections();
-  }, []);
-
-  return (
-    <>
+  if (isLoading) {
+    return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.innerContainer}>
-          {suggestedConnection ? (
-            <ConnectionCard
-              suggestedConnection={suggestedConnection}
-              handleNextProfile={handleNextProfile}
-              carouselItems={carouselItems}
-              match={match}
-            />
-          ) : (
-            <Text>No hay sugerencias de conexión.</Text>
-          )}
+        <View style={[styles.innerContainer, styles.centerContent]}>
+          <ActivityIndicator size="large" color={COLORS.green} />
         </View>
       </SafeAreaView>
-    </>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={[styles.innerContainer, styles.centerContent]}>
+          <Text style={styles.errorText}>{error || GENERIC_ERROR_TEXT}</Text>
+          {/* Aquí podrías añadir un botón de Reintentar si el hook lo soporta */}
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.innerContainer}>
+        {suggestedConnection ? (
+          <ConnectionCard
+            suggestedConnection={suggestedConnection}
+            handleNextProfile={handleNextProfile}
+            carouselItems={carouselItems}
+            match={match}
+          />
+        ) : (
+          <View style={styles.endContainer}>
+            <Text style={styles.endText}>{NO_SUGGESTIONS_TEXT}</Text>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Ver mis Matches"
+                onPress={() => navigation.navigate('Chat' as never)}
+                color={COLORS.green}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Revisar mi Perfil"
+                onPress={() => navigation.navigate('Perfil' as never)}
+                color={COLORS.blue}
+              />
+            </View>
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.primaryWhite,
-    minHeight: '100%'
+    flex: 1,
+    backgroundColor: COLORS.primaryWhite
   },
   innerContainer: {
+    flex: 1,
     padding: 12,
-    display: 'flex',
-    gap: 16,
     alignItems: 'center'
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  errorText: {
+    color: COLORS.red, // Asegúrate que COLORS.red exista o usa 'red'
+    fontSize: 16,
+    textAlign: 'center',
+    paddingHorizontal: 20
+  },
+  endContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20
+  },
+  endText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 24,
+    color: COLORS.darkGray // Asegúrate que COLORS.darkGray exista
+  },
+  buttonContainer: {
+    width: '80%',
+    marginVertical: 8
   },
   card: {
     width: width * 0.9,
@@ -91,8 +131,8 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 6,
     position: 'relative',
-    marginBottom: 56,
-    height: height * 0.73
+    marginBottom: 56, // Considera si este margen inferior es necesario con flex: 1
+    height: height * 0.73 // Ten cuidado con alturas fijas, podrían cortar contenido
   },
   imageContainer: {
     position: 'relative',
@@ -101,7 +141,7 @@ const styles = StyleSheet.create({
   },
   userImg: {
     width: '100%',
-    height: width * 0.9 // cuadrado
+    height: width * 0.9
   },
   gradientOverlay: {
     position: 'absolute',
@@ -109,7 +149,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)' // Gradiente oscuro sobre toda la imagen
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   textOverlay: {
     position: 'absolute',
@@ -130,83 +170,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.primaryWhite,
     marginTop: 4
-  },
-  cardContent: {
-    padding: 16,
-    alignItems: 'center'
-  },
-  compatibility: {
-    fontSize: 14,
-    color: COLORS.green,
-    marginBottom: 8
-  },
-  quoteCard: {
-    backgroundColor: COLORS.lightGray,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16
-  },
-  quoteText: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    color: COLORS.black,
-    textAlign: 'center'
-  },
-  description: {
-    color: COLORS.darkGray,
-    fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 16
-  },
-  showMore: {
-    color: COLORS.blue,
-    fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 16
-  },
-  tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginVertical: 8
-  },
-  tag: {
-    backgroundColor: COLORS.lightGray,
-    borderRadius: 16,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    margin: 4
-  },
-  tagText: {
-    color: COLORS.black,
-    fontSize: 12
-  },
-  actionButtons: {
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 16,
-    backgroundColor: COLORS.primaryWhite
-  },
-  actionBtn: {
-    padding: 8,
-    borderRadius: 50,
-    backgroundColor: COLORS.primaryWhite,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-    aspectRatio: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  btnText: {
-    fontSize: 12,
-    color: COLORS.darkGray,
-    marginTop: 4,
-    textAlign: 'center'
   }
 });

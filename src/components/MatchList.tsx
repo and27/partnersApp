@@ -7,6 +7,7 @@ const MatchList = () => {
   if (!matches.length) {
     return <Text>No matches</Text>;
   }
+
   return (
     <View>
       <FlatList
